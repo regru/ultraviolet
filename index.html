@@ -1,1 +1,673 @@
-Hello
+<h1>Syntax Gallery</h1>
+
+These are just some examples of the languages that ultraviolet handles. The
+complete list is [here http://macromates.com/svn/Bundles/trunk/Bundles/].
+
+<h2>C</h2>
+<pre class="mac_classic"><span class="line-numbers">   1 </span> 
+<span class="line-numbers">   2 </span> <span class="Keyword">void</span> <span class="FunctionName">Init_oregexp</span>() {
+<span class="line-numbers">   3 </span>    mOniguruma = <span class="FunctionName">rb_define_module</span>(<span class="String"><span class="String">&quot;</span>Oniguruma<span class="String">&quot;</span></span>);
+<span class="line-numbers">   4 </span>    VALUE cORegexp = <span class="FunctionName">rb_define_class_under</span>(mOniguruma, <span class="String"><span class="String">&quot;</span>ORegexp<span class="String">&quot;</span></span>, rb_cObject);
+<span class="line-numbers">   5 </span>    <span class="FunctionName">rb_define_alloc_func</span>(cORegexp, oregexp_allocate);
+<span class="line-numbers">   6 </span>    <span class="FunctionName">rb_define_method</span>( cORegexp, <span class="String"><span class="String">&quot;</span>initialize<span class="String">&quot;</span></span>, oregexp_initialize, <span class="Number">2</span> );
+<span class="line-numbers">   7 </span>    <span class="FunctionName">rb_define_method</span>( cORegexp, <span class="String"><span class="String">&quot;</span>match<span class="String">&quot;</span></span>, oregexp_match, -<span class="Number">1</span> );
+<span class="line-numbers">   8 </span>    <span class="FunctionName">rb_define_method</span>( cORegexp, <span class="String"><span class="String">&quot;</span>=~<span class="String">&quot;</span></span>, oregexp_match_op, <span class="Number">1</span> );
+<span class="line-numbers">   9 </span>    <span class="FunctionName">rb_define_method</span>( cORegexp, <span class="String"><span class="String">&quot;</span>gsub<span class="String">&quot;</span></span>, oregexp_m_gsub, -<span class="Number">1</span> );
+<span class="line-numbers">  10 </span>    <span class="FunctionName">rb_define_method</span>( cORegexp, <span class="String"><span class="String">&quot;</span>sub<span class="String">&quot;</span></span>,  oregexp_m_sub,  -<span class="Number">1</span> );
+<span class="line-numbers">  11 </span>    <span class="FunctionName">rb_define_method</span>( cORegexp, <span class="String"><span class="String">&quot;</span>gsub!<span class="String">&quot;</span></span>, oregexp_m_gsub_bang, -<span class="Number">1</span> );
+<span class="line-numbers">  12 </span>    <span class="FunctionName">rb_define_method</span>( cORegexp, <span class="String"><span class="String">&quot;</span>sub!<span class="String">&quot;</span></span>,  oregexp_m_sub_bang,  -<span class="Number">1</span> );
+<span class="line-numbers">  13 </span>    <span class="FunctionName">rb_define_method</span>( cORegexp, <span class="String"><span class="String">&quot;</span>scan<span class="String">&quot;</span></span>,  oregexp_m_scan,  <span class="Number">1</span> );
+<span class="line-numbers">  14 </span>    <span class="FunctionName">rb_define_method</span>( cORegexp, <span class="String"><span class="String">&quot;</span>===<span class="String">&quot;</span></span>,  oregexp_m_eqq,  <span class="Number">1</span> );
+<span class="line-numbers">  15 </span>    <span class="FunctionName">rb_define_const</span>( mOniguruma, <span class="String"><span class="String">&quot;</span>VERSION<span class="String">&quot;</span></span>, <span class="FunctionName">rb_str_new2</span>(<span class="FunctionName">onig_version</span>()) );
+<span class="line-numbers">  16 </span> }
+<span class="line-numbers">  17 </span> 
+</pre>
+
+<h2>C++</h2>
+
+<pre class="mac_classic"><span class="line-numbers">   1 </span> 
+<span class="line-numbers">   2 </span> <span class="PreprocessorLine">#<span class="PreprocessorDirective">ifndef</span> UNIT_H_</span>
+<span class="line-numbers">   3 </span> <span class="PreprocessorLine">#define <span class="PreprocessorDirective">UNIT_H_</span></span>
+<span class="line-numbers">   4 </span> 
+<span class="line-numbers">   5 </span> <span class="PreprocessorLine">#<span class="PreprocessorDirective">include</span> <span class="String"><span class="String">&quot;</span>Traits.h<span class="String">&quot;</span></span></span>
+<span class="line-numbers">   6 </span> <span class="PreprocessorLine">#<span class="PreprocessorDirective">include</span> <span class="String"><span class="String">&lt;</span>set<span class="String">&gt;</span></span></span>
+<span class="line-numbers">   7 </span> <span class="PreprocessorLine">#<span class="PreprocessorDirective">include</span> <span class="String"><span class="String">&lt;</span>deque<span class="String">&gt;</span></span></span>
+<span class="line-numbers">   8 </span> 
+<span class="line-numbers">   9 </span> namespace Learning {
+<span class="line-numbers">  10 </span>    template &lt;
+<span class="line-numbers">  11 </span>       typename Real,
+<span class="line-numbers">  12 </span>       template &lt;typename&gt; class Son,
+<span class="line-numbers">  13 </span>       typename traits = Traits&lt;Real, Son&gt; &gt;
+<span class="line-numbers">  14 </span>    class Unit {
+<span class="line-numbers">  15 </span>    public:
+<span class="line-numbers">  16 </span>       <span class="Keyword">typedef</span> typename traits::vector_type vector_type;
+<span class="line-numbers">  17 </span>       <span class="Keyword">typedef</span> typename traits::unit_type unit_type;
+<span class="line-numbers">  18 </span> 
+<span class="line-numbers">  19 </span>       template &lt;typename InputIterator&gt;
+<span class="line-numbers">  20 </span>       <span class="FunctionName">Unit</span>(
+<span class="line-numbers">  21 </span>          InputIterator begin,
+<span class="line-numbers">  22 </span>          InputIterator end
+<span class="line-numbers">  23 </span>       ) :
+<span class="line-numbers">  24 </span>          <span class="FunctionName">value</span>( begin, end )
+<span class="line-numbers">  25 </span>       {}
+<span class="line-numbers">  26 </span> 
+<span class="line-numbers">  27 </span>       virtual <span class="Keyword">void</span> <span class="Variable">addNeighbor</span>( <span class="Keyword">const</span> unit_type &amp; unit ) {
+<span class="line-numbers">  28 </span>          neighbors.<span class="FunctionName">insert</span>( &amp;unit );
+<span class="line-numbers">  29 </span>          neighborList.<span class="FunctionName">push_back</span>( &amp;unit );
+<span class="line-numbers">  30 </span>       }
+<span class="line-numbers">  31 </span> 
+<span class="line-numbers">  32 </span>       virtual <span class="Keyword">void</span> <span class="Variable">deleteNeighbor</span>( <span class="Keyword">const</span> unit_type &amp; unit ) {
+<span class="line-numbers">  33 </span>          neighbors.<span class="FunctionName">erase</span>( &amp;unit );
+<span class="line-numbers">  34 </span>          typename std::deque&lt; <span class="Keyword">const</span> unit_type* &gt;::iterator i;
+<span class="line-numbers">  35 </span>          <span class="Keyword">for</span> ( i = neighborList.<span class="FunctionName">begin</span>(); i != neighborList.<span class="FunctionName">end</span>(); i++ ) {
+<span class="line-numbers">  36 </span>             <span class="Keyword">if</span> ( (*i) == &amp;unit ) {
+<span class="line-numbers">  37 </span>                neighborList.<span class="FunctionName">erase</span>( i );
+<span class="line-numbers">  38 </span>                <span class="Keyword">break</span>;
+<span class="line-numbers">  39 </span>             }
+<span class="line-numbers">  40 </span>          }
+<span class="line-numbers">  41 </span>       }
+<span class="line-numbers">  42 </span> 
+<span class="line-numbers">  43 </span>       <span class="Keyword">bool</span> <span class="Variable">hasNeighbor</span>( <span class="Keyword">const</span> unit_type &amp; unit ) {
+<span class="line-numbers">  44 </span>          <span class="Keyword">return</span> neighbors.<span class="FunctionName">find</span>( &amp;unit) != neighbors.<span class="FunctionName">end</span>();
+<span class="line-numbers">  45 </span>       }
+<span class="line-numbers">  46 </span> 
+<span class="line-numbers">  47 </span>       <span class="Keyword">int</span> <span class="Variable">getNeighborCount</span>() {
+<span class="line-numbers">  48 </span>          <span class="Keyword">return</span> neighbors.<span class="FunctionName">size</span>();
+<span class="line-numbers">  49 </span>       }
+<span class="line-numbers">  50 </span> 
+<span class="line-numbers">  51 </span>       unit_type &amp; <span class="FunctionName">getNeighbor</span>( <span class="Keyword">int</span> pos ) {
+<span class="line-numbers">  52 </span>          <span class="Keyword">return</span> *( const_cast&lt; unit_type* &gt;(neighborList[pos]) );
+<span class="line-numbers">  53 </span>       }
+<span class="line-numbers">  54 </span> 
+<span class="line-numbers">  55 </span>       vector_type &amp; <span class="FunctionName">getValue</span>() {
+<span class="line-numbers">  56 </span>          <span class="Keyword">return</span> value;
+<span class="line-numbers">  57 </span>       }
+<span class="line-numbers">  58 </span> 
+<span class="line-numbers">  59 </span>       virtual ~<span class="FunctionName">Unit</span>() {
+<span class="line-numbers">  60 </span>       }
+<span class="line-numbers">  61 </span>    private:
+<span class="line-numbers">  62 </span>       <span class="FunctionName">Unit</span>( <span class="Keyword">const</span> unit_type &amp; );
+<span class="line-numbers">  63 </span>       std::set&lt; <span class="Keyword">const</span> unit_type * &gt; neighbors;
+<span class="line-numbers">  64 </span>       std::deque&lt; <span class="Keyword">const</span> unit_type* &gt; neighborList;
+<span class="line-numbers">  65 </span>       vector_type value;
+<span class="line-numbers">  66 </span>    };
+<span class="line-numbers">  67 </span> }
+<span class="line-numbers">  68 </span> 
+<span class="line-numbers">  69 </span> 
+<span class="line-numbers">  70 </span> <span class="PreprocessorLine">#<span class="PreprocessorDirective">endif</span></span> /*UNIT_H_*/
+</pre>
+
+<h2>Bibtex</h2>
+
+<pre class="mac_classic"><span class="line-numbers">   1 </span> 
+<span class="line-numbers">   2 </span> <span class="Keyword"><span class="Keyword">@</span>String</span>{<span class="Variable">icra</span>04 = <span class="String"><span class="String">{</span>2004 IEEE Int. Conf. on Robotics and Automation<span class="String">}</span></span>}
+<span class="line-numbers">   3 </span> <span class="Keyword"><span class="Keyword">@</span>String</span>{<span class="Variable">icra</span>04_address = <span class="String"><span class="String">{</span>New Orleans, USA<span class="String">}</span></span>}
+<span class="line-numbers">   4 </span> 
+<span class="line-numbers">   5 </span> <span class="Keyword"><span class="Keyword">@</span>Article</span>{<span class="TypeName">roweisghahramani99</span>,
+<span class="line-numbers">   6 </span>   <span class="EmbeddedSource">author</span>    = <span class="String"><span class="String">{</span>Sam Roweis and Zoubin Ghahramani<span class="String">}</span></span>,
+<span class="line-numbers">   7 </span>   <span class="EmbeddedSource">title</span>     = <span class="String"><span class="String">{</span>A Unifying Review of Linear Gaussian Models<span class="String">}</span></span>,
+<span class="line-numbers">   8 </span>   <span class="EmbeddedSource">journal</span>   = <span class="String"><span class="String">{</span>Neural Computation<span class="String">}</span></span>,
+<span class="line-numbers">   9 </span>   <span class="EmbeddedSource">year</span>      = <span class="String"><span class="String">{</span>1999<span class="String">}</span></span>,
+<span class="line-numbers">  10 </span>   <span class="EmbeddedSource">number</span>    = <span class="String"><span class="String">{</span>11<span class="String">}</span></span>,
+<span class="line-numbers">  11 </span>   <span class="EmbeddedSource">pages</span>     = <span class="String"><span class="String">{</span>305-345<span class="String">}</span></span>
+<span class="line-numbers">  12 </span> }
+<span class="line-numbers">  13 </span> 
+<span class="line-numbers">  14 </span> <span class="Keyword"><span class="Keyword">@</span>PhdThesis</span>{<span class="TypeName">murphy01</span>,
+<span class="line-numbers">  15 </span>   <span class="EmbeddedSource">author</span>    = <span class="String"><span class="String">{</span>Kevin Patrick Murphy<span class="String">}</span></span>,
+<span class="line-numbers">  16 </span>   <span class="EmbeddedSource">title</span>     = <span class="String"><span class="String">{</span>Dynamic Bayesian Networks: Representation, Inference and Learning<span class="String">}</span></span>,
+<span class="line-numbers">  17 </span>   <span class="EmbeddedSource">school</span>    = <span class="String"><span class="String">{</span>University of California, Berkeley<span class="String">}</span></span>,
+<span class="line-numbers">  18 </span>   <span class="EmbeddedSource">year</span>      = <span class="String"><span class="String">{</span>2001<span class="String">}</span></span>
+<span class="line-numbers">  19 </span> }
+</pre>
+
+<h2>Latex</h2>
+
+<pre class="mac_classic"><span class="line-numbers">   1 </span> 
+<span class="line-numbers">   2 </span> %------------------------------------------------------------------------------
+<span class="line-numbers">   3 </span> \subsection{Measuring prediction accuracy}
+<span class="line-numbers">   4 </span> %------------------------------------------------------------------------------
+<span class="line-numbers">   5 </span> 
+<span class="line-numbers">   6 </span> A common performance metric for probabilistic approaches is the maximum data
+<span class="line-numbers">   7 </span> likelihood or approximations like the \ac{bic} (see \S
+<span class="line-numbers">   8 </span> \ref{sec:hmm:structure_learning}). However, for our particular application,
+<span class="line-numbers">   9 </span> this metric has the drawback of not having any geometric interpretation.
+<span class="line-numbers">  10 </span> Intuitively, we would like to know \emph{how far} was the predicted state from
+<span class="line-numbers">  11 </span> the real one. Hence, we have preferred to measure the performance of our
+<span class="line-numbers">  12 </span> algorithm in terms of the average error, computed as the expected distance between
+<span class="line-numbers">  13 </span> the prediction for a time horizon $H$ and the effective observation $O_{t+H}$.
+<span class="line-numbers">  14 </span> 
+<span class="line-numbers">  15 </span> \begin{equation}
+<span class="line-numbers">  16 </span>   \langle E \rangle = \sum_{i \in \states} P([S_{t+H}=i] \mid O_{1:t}) \lVert
+<span class="line-numbers">  17 </span>   O_{t+H} - \mu_i \rVert^{1/2}
+<span class="line-numbers">  18 </span> \label{eq:results:expected_distance}
+<span class="line-numbers">  19 </span> \end{equation}
+<span class="line-numbers">  20 </span> 
+<span class="line-numbers">  21 </span> \noindent for a single time step. This measure may be generalized for a complete
+<span class="line-numbers">  22 </span> data set containing $K$ observation sequences:
+<span class="line-numbers">  23 </span> 
+<span class="line-numbers">  24 </span> \begin{equation}
+<span class="line-numbers">  25 </span>   \langle E \rangle =
+<span class="line-numbers">  26 </span>     \frac{1}{K}
+<span class="line-numbers">  27 </span>     \sum_{k = 1}^{K}
+<span class="line-numbers">  28 </span>       \frac{1}{T^k-H}
+<span class="line-numbers">  29 </span>       \sum_{t = 1}^{T^k - H}
+<span class="line-numbers">  30 </span>         \sum_{i \in \states}
+<span class="line-numbers">  31 </span>           P([S_{t+H}=i] \mid O_{1:t}^k) \lVert O^k_{t+H} - \mu_i \rVert^{1/2}
+<span class="line-numbers">  32 </span> \label{eq:results:expected_distance_general}
+<span class="line-numbers">  33 </span> \end{equation}
+<span class="line-numbers">  34 </span> 
+<span class="line-numbers">  35 </span> It is worth noting that, as opposed to the standard approach in machine
+<span class="line-numbers">  36 </span> learning of conducting tests using a ``learning'' and a ``testing'' data  sets,
+<span class="line-numbers">  37 </span> the experiments we have presented here will use only a single data set. The
+<span class="line-numbers">  38 </span> reason is that, since learning takes place after prediction, there is no need
+<span class="line-numbers">  39 </span> to such separation: every observation sequence is ``unknown'' when prediction
+<span class="line-numbers">  40 </span> takes place.
+</pre>
+
+<h2>Diff</h2>
+
+<pre class="mac_classic"><span class="line-numbers">   1 </span> 
+<span class="line-numbers">   2 </span> --- /etc/apache2/apache2.conf 2006-11-15 22:13:53.000000000 +0100
+<span class="line-numbers">   3 </span> +++ /etc/apache2/apache2.conf.dpkg-new 2007-01-15 19:10:51.000000000 +0100
+<span class="line-numbers">   4 </span> @@ -1,50 +1,91 @@
+<span class="line-numbers">   5 </span> +#
+<span class="line-numbers">   6 </span>  # Based upon the NCSA server configuration files originally by Rob McCool.
+<span class="line-numbers">   7 </span> -# Changed extensively for the Debian package by Daniel Stone &lt;daniel@sfarc.net&gt;
+<span class="line-numbers">   8 </span> -# and also by Thom May &lt;thom@debian.org&gt;.
+<span class="line-numbers">   9 </span> +#
+<span class="line-numbers">  10 </span> +# This is the main Apache server configuration file.  It contains the
+<span class="line-numbers">  11 </span> +# configuration directives that give the server its instructions.
+<span class="line-numbers">  12 </span> +# See &lt;URL:http://httpd.apache.org/docs-2.1/&gt; for detailed information about
+<span class="line-numbers">  13 </span> +# the directives.
+</pre>
+
+<h2>HTML</h2>
+
+<pre class="mac_classic"><span class="line-numbers">   1 </span> 
+<span class="line-numbers">   2 </span> <span class="MarkupXmlDeclaration"><span class="MarkupXmlDeclaration">&lt;?</span><span class="MarkupNameOfTag">xml</span> <span class="MarkupTagAttribute">version</span>=<span class="MarkupDoctype"><span class="MarkupDoctype">&quot;</span>1.0<span class="MarkupDoctype">&quot;</span></span> <span class="MarkupTagAttribute">encoding</span>=<span class="MarkupDoctype"><span class="MarkupDoctype">&quot;</span>iso-8859-1<span class="MarkupDoctype">&quot;</span></span><span class="MarkupXmlDeclaration">?&gt;</span></span>
+<span class="line-numbers">   3 </span> <span class="MarkupTag"><span class="MarkupTag">&lt;!</span><span class="MarkupDoctype"><span class="MarkupNameOfTag">DOCTYPE</span> html</span></span>
+<span class="line-numbers">   4 </span> <span class="MarkupTag"><span class="MarkupDoctype">     PUBLIC <span class="MarkupDoctype">&quot;-//W3C//DTD XHTML 1.0 Frameset//EN&quot;</span></span></span>
+<span class="line-numbers">   5 </span> <span class="MarkupTag"><span class="MarkupDoctype">     <span class="MarkupDoctype">&quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd&quot;</span></span><span class="MarkupTag">&gt;</span></span>
+<span class="line-numbers">   6 </span> 
+<span class="line-numbers">   7 </span> <span class="Comment"><span class="Comment">&lt;!--</span></span>
+<span class="line-numbers">   8 </span> <span class="Comment"></span>
+<span class="line-numbers">   9 </span> <span class="Comment">    RDoc Documentation</span>
+<span class="line-numbers">  10 </span> <span class="Comment"></span>
+<span class="line-numbers">  11 </span> <span class="Comment">  <span class="Comment">--&gt;</span></span>
+<span class="line-numbers">  12 </span> <span class="MarkupTag"><span class="MarkupTag">&lt;</span><span class="MarkupNameOfTag">html</span> <span class="MarkupTagAttribute">xmlns</span>=<span class="String"><span class="String">&quot;</span>http://www.w3.org/1999/xhtml<span class="String">&quot;</span></span> <span class="MarkupTagAttribute">xml:lang</span>=<span class="String"><span class="String">&quot;</span>en<span class="String">&quot;</span></span> <span class="MarkupTagAttribute">lang</span>=<span class="String"><span class="String">&quot;</span>en<span class="String">&quot;</span></span><span class="MarkupTag">&gt;</span></span>
+<span class="line-numbers">  13 </span> <span class="MarkupTag"><span class="MarkupTag">&lt;</span><span class="MarkupNameOfTag">head</span><span class="MarkupTag">&gt;</span></span>
+<span class="line-numbers">  14 </span>   <span class="MarkupTag"><span class="MarkupTag">&lt;</span><span class="MarkupNameOfTag">title</span><span class="MarkupTag">&gt;</span></span>RDoc Documentation<span class="MarkupTag"><span class="MarkupTag">&lt;/</span><span class="MarkupNameOfTag">title</span><span class="MarkupTag">&gt;</span></span>
+<span class="line-numbers">  15 </span>   <span class="MarkupTag"><span class="MarkupTag">&lt;</span><span class="MarkupNameOfTag">meta</span> <span class="MarkupTagAttribute">http-equiv</span>=<span class="String"><span class="String">&quot;</span>Content-Type<span class="String">&quot;</span></span> <span class="MarkupTagAttribute">content</span>=<span class="String"><span class="String">&quot;</span>text/html; charset=iso-8859-1<span class="String">&quot;</span></span> /<span class="MarkupTag">&gt;</span></span>
+<span class="line-numbers">  16 </span> <span class="MarkupTag"><span class="MarkupTag">&lt;/</span><span class="MarkupNameOfTag">head</span><span class="MarkupTag">&gt;</span></span>
+<span class="line-numbers">  17 </span> <span class="MarkupTag"><span class="MarkupTag">&lt;</span><span class="MarkupNameOfTag">frameset</span> <span class="MarkupTagAttribute">rows</span>=<span class="String"><span class="String">&quot;</span>20%, 80%<span class="String">&quot;</span></span><span class="MarkupTag">&gt;</span></span>
+<span class="line-numbers">  18 </span>     <span class="MarkupTag"><span class="MarkupTag">&lt;</span><span class="MarkupNameOfTag">frameset</span> <span class="MarkupTagAttribute">cols</span>=<span class="String"><span class="String">&quot;</span>25%,35%,45%<span class="String">&quot;</span></span><span class="MarkupTag">&gt;</span></span>
+<span class="line-numbers">  19 </span>         <span class="MarkupTag"><span class="MarkupTag">&lt;</span><span class="MarkupNameOfTag">frame</span> <span class="MarkupTagAttribute">src</span>=<span class="String"><span class="String">&quot;</span>fr_file_index.html<span class="String">&quot;</span></span>   <span class="MarkupTagAttribute">title</span>=<span class="String"><span class="String">&quot;</span>Files<span class="String">&quot;</span></span> <span class="MarkupTagAttribute">name</span>=<span class="String"><span class="String">&quot;</span>Files<span class="String">&quot;</span></span> /<span class="MarkupTag">&gt;</span></span>
+<span class="line-numbers">  20 </span>         <span class="MarkupTag"><span class="MarkupTag">&lt;</span><span class="MarkupNameOfTag">frame</span> <span class="MarkupTagAttribute">src</span>=<span class="String"><span class="String">&quot;</span>fr_class_index.html<span class="String">&quot;</span></span>  <span class="MarkupTagAttribute">name</span>=<span class="String"><span class="String">&quot;</span>Classes<span class="String">&quot;</span></span> /<span class="MarkupTag">&gt;</span></span>
+<span class="line-numbers">  21 </span>         <span class="MarkupTag"><span class="MarkupTag">&lt;</span><span class="MarkupNameOfTag">frame</span> <span class="MarkupTagAttribute">src</span>=<span class="String"><span class="String">&quot;</span>fr_method_index.html<span class="String">&quot;</span></span> <span class="MarkupTagAttribute">name</span>=<span class="String"><span class="String">&quot;</span>Methods<span class="String">&quot;</span></span> /<span class="MarkupTag">&gt;</span></span>
+<span class="line-numbers">  22 </span>     <span class="MarkupTag"><span class="MarkupTag">&lt;/</span><span class="MarkupNameOfTag">frameset</span><span class="MarkupTag">&gt;</span></span>
+<span class="line-numbers">  23 </span>     <span class="MarkupTag"><span class="MarkupTag">&lt;</span><span class="MarkupNameOfTag">frame</span> <span class="MarkupTagAttribute">src</span>=<span class="String"><span class="String">&quot;</span>files/lib/oniguruma_rb.html<span class="String">&quot;</span></span> <span class="MarkupTagAttribute">name</span>=<span class="String"><span class="String">&quot;</span>docwin<span class="String">&quot;</span></span> /<span class="MarkupTag">&gt;</span></span>
+<span class="line-numbers">  24 </span> <span class="MarkupTag"><span class="MarkupTag">&lt;/</span><span class="MarkupNameOfTag">frameset</span><span class="MarkupTag">&gt;</span></span>
+<span class="line-numbers">  25 </span> <span class="MarkupTag"><span class="MarkupTag">&lt;/</span><span class="MarkupNameOfTag">html</span><span class="MarkupTag">&gt;</span></span>
+</pre>
+
+<h2>CSS</h2>
+
+<pre class="mac_classic"><span class="line-numbers">   1 </span> 
+<span class="line-numbers">   2 </span> <span class="Comment"><span class="Comment">/*</span> === Classes =================================== <span class="Comment">*/</span></span>
+<span class="line-numbers">   3 </span> 
+<span class="line-numbers">   4 </span> <span class="MarkupNameOfTag">table</span><span class="MarkupTagAttribute"><span class="MarkupTagAttribute">.</span>header-table</span> {
+<span class="line-numbers">   5 </span>     <span class="LibraryObject">color</span>: <span class="LibraryConstant">white</span>;
+<span class="line-numbers">   6 </span>     <span class="LibraryObject">font-size</span>: small;
+<span class="line-numbers">   7 </span> }
+<span class="line-numbers">   8 </span> 
+<span class="line-numbers">   9 </span> <span class="MarkupTagAttribute"><span class="MarkupTagAttribute">.</span>type-note</span> {
+<span class="line-numbers">  10 </span>     <span class="LibraryObject">font-size</span>: small;
+<span class="line-numbers">  11 </span>     <span class="LibraryObject">color</span>: <span class="UserDefinedConstant"><span class="UserDefinedConstant">#</span>DEDEDE</span>;
+<span class="line-numbers">  12 </span> }
+<span class="line-numbers">  13 </span> 
+<span class="line-numbers">  14 </span> <span class="MarkupTagAttribute"><span class="MarkupTagAttribute">.</span>xxsection-bar</span> {
+<span class="line-numbers">  15 </span>     <span class="LibraryObject">background</span>: <span class="UserDefinedConstant"><span class="UserDefinedConstant">#</span>eee</span>;
+<span class="line-numbers">  16 </span>     <span class="LibraryObject">color</span>: <span class="UserDefinedConstant"><span class="UserDefinedConstant">#</span>333</span>;
+<span class="line-numbers">  17 </span>     <span class="LibraryObject">padding</span>: <span class="Number">3</span><span class="Keyword">px</span>;
+<span class="line-numbers">  18 </span> }
+<span class="line-numbers">  19 </span> 
+<span class="line-numbers">  20 </span> <span class="MarkupTagAttribute"><span class="MarkupTagAttribute">.</span>section-bar</span> {
+<span class="line-numbers">  21 </span>    <span class="LibraryObject">color</span>: <span class="UserDefinedConstant"><span class="UserDefinedConstant">#</span>333</span>;
+<span class="line-numbers">  22 </span>    <span class="LibraryObject">border-bottom</span>: <span class="Number">1</span><span class="Keyword">px</span> <span class="LibraryConstant">solid</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">#</span>999</span>;
+<span class="line-numbers">  23 </span>     <span class="LibraryObject">margin-left</span>: <span class="Number">-20</span><span class="Keyword">px</span>;
+<span class="line-numbers">  24 </span> }
+<span class="line-numbers">  25 </span> 
+<span class="line-numbers">  26 </span> 
+<span class="line-numbers">  27 </span> <span class="MarkupTagAttribute"><span class="MarkupTagAttribute">.</span>section-title</span> {
+<span class="line-numbers">  28 </span>     <span class="LibraryObject">background</span>: <span class="UserDefinedConstant"><span class="UserDefinedConstant">#</span>79a</span>;
+<span class="line-numbers">  29 </span>     <span class="LibraryObject">color</span>: <span class="UserDefinedConstant"><span class="UserDefinedConstant">#</span>eee</span>;
+<span class="line-numbers">  30 </span>     <span class="LibraryObject">padding</span>: <span class="Number">3</span><span class="Keyword">px</span>;
+<span class="line-numbers">  31 </span>     <span class="LibraryObject">margin-top</span>: <span class="Number">2</span><span class="Keyword">em</span>;
+<span class="line-numbers">  32 </span>     <span class="LibraryObject">margin-left</span>: <span class="Number">-30</span><span class="Keyword">px</span>;
+<span class="line-numbers">  33 </span>     <span class="LibraryObject">border</span>: <span class="Number">1</span><span class="Keyword">px</span> <span class="LibraryConstant">solid</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">#</span>999</span>;
+<span class="line-numbers">  34 </span> }
+<span class="line-numbers">  35 </span> 
+<span class="line-numbers">  36 </span> <span class="MarkupTagAttribute"><span class="MarkupTagAttribute">.</span>top-aligned-row</span> {  <span class="LibraryObject">vertical-align</span>: <span class="LibraryConstant">top</span> }
+<span class="line-numbers">  37 </span> <span class="MarkupTagAttribute"><span class="MarkupTagAttribute">.</span>bottom-aligned-row</span> { <span class="LibraryObject">vertical-align</span>: <span class="LibraryConstant">bottom</span> }
+</pre>
+
+<h1>Theme Gallery</h1>
+
+<h2>active4d</h2>
+
+<pre class="active4d"><span class="line-numbers">   1 </span> 
+<span class="line-numbers">   2 </span> <span class="Keyword">module</span> <span class="TypeName">Uv</span>
+<span class="line-numbers">   3 </span>    <span class="Keyword">def</span> <span class="FunctionName">Uv.parse</span> text, output <span class="Operator">=</span> <span class="String"><span class="String">&quot;</span>xhtml<span class="String">&quot;</span></span>, syntax_name <span class="Operator">=</span> <span class="BuiltInConstant">nil</span>, line_numbers <span class="Operator">=</span> <span class="BuiltInConstant">false</span>, render_style <span class="Operator">=</span> <span class="String"><span class="String">&quot;</span>classic<span class="String">&quot;</span></span>
+<span class="line-numbers">   4 </span>       init_syntaxes <span class="Keyword">unless</span> <span class="Variable"><span class="Variable">@</span>syntaxes</span>
+<span class="line-numbers">   5 </span>       renderer <span class="Operator">=</span> <span class="LibraryClassType">File</span>.<span class="FunctionName">join</span>( <span class="LibraryClassType">File</span>.<span class="FunctionName">dirname</span>(<span class="Variable">__FILE__</span>), <span class="String"><span class="String">'</span>..<span class="String">'</span></span>,<span class="String"><span class="String">&quot;</span>render<span class="String">&quot;</span></span>, output,<span class="String"><span class="String">&quot;</span><span class="String"><span class="String">#{</span>render_style<span class="String">}</span></span>.render<span class="String">&quot;</span></span>)
+<span class="line-numbers">   6 </span>       css_class <span class="Operator">=</span> render_style
+<span class="line-numbers">   7 </span>       render_options <span class="Operator">=</span> <span class="Variable">YAML</span>.<span class="FunctionName">load</span>( <span class="LibraryClassType">File</span>.<span class="FunctionName">open</span>(  renderer ) )
+<span class="line-numbers">   8 </span>       <span class="Keyword">if</span> output <span class="Operator">==</span> <span class="String"><span class="String">&quot;</span>xhtml<span class="String">&quot;</span></span>
+<span class="line-numbers">   9 </span>          render_processor <span class="Operator">=</span> <span class="LibraryClassType">HtmlProcessor</span>.<span class="FunctionName">new</span>( render_options, line_numbers )
+<span class="line-numbers">  10 </span>          <span class="Variable"><span class="Variable">@</span>syntaxes</span>[syntax_name].<span class="FunctionName">parse</span>( text,  render_processor )
+<span class="line-numbers">  11 </span>          <span class="String"><span class="String">&quot;</span>&lt;pre class =<span class="UserDefinedConstant">\&quot;</span><span class="String"><span class="String">#{</span>css_class<span class="String">}</span></span><span class="UserDefinedConstant">\&quot;</span>&gt;<span class="String"><span class="String">#{</span>render_processor<span class="String"><span class="String">.</span><span class="FunctionName">string</span></span><span class="String">}</span></span>&lt;/pre&gt;<span class="String">&quot;</span></span>
+<span class="line-numbers">  12 </span>       <span class="Keyword">else</span>
+<span class="line-numbers">  13 </span>          <span class="Keyword">raise</span>( <span class="Variable">ArgumentError</span>, <span class="String"><span class="String">&quot;</span>Output for <span class="String"><span class="String">#{</span>output<span class="String">}</span></span> is not yet implemented<span class="String">&quot;</span></span> )
+<span class="line-numbers">  14 </span>       <span class="Keyword">end</span>
+<span class="line-numbers">  15 </span>    <span class="Keyword">end</span>
+<span class="line-numbers">  16 </span> <span class="Keyword">end</span>
+</pre>
+
+<h2>all_hallows_eve</h2>
+
+<pre class="all_hallows_eve"><span class="line-numbers">   1 </span> 
+<span class="line-numbers">   2 </span> <span class="SourceBase"><span class="Keyword">module</span> <span class="TypeName">Uv</span></span>
+<span class="line-numbers">   3 </span>    <span class="SourceBase"><span class="Keyword">def</span> <span class="FunctionName">Uv.parse</span></span> text<span class="SourceBase">,</span> output <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>xhtml<span class="String">&quot;</span></span><span class="SourceBase">,</span> syntax_name <span class="Keyword">=</span> <span class="Constant">nil</span><span class="SourceBase">,</span> line_numbers <span class="Keyword">=</span> <span class="Constant">false</span><span class="SourceBase">,</span> render_style <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>classic<span class="String">&quot;</span></span>
+<span class="line-numbers">   4 </span>       init_syntaxes <span class="Keyword">unless</span> <span class="SourceBase"><span class="SourceBase">@</span>syntaxes</span>
+<span class="line-numbers">   5 </span>       renderer <span class="Keyword">=</span> <span class="SourceBase">File</span><span class="SourceBase"><span class="SourceBase">.</span><span class="FunctionName">join</span></span><span class="SourceBase">(</span> <span class="SourceBase">File</span><span class="SourceBase"><span class="SourceBase">.</span><span class="FunctionName">dirname</span></span><span class="SourceBase">(</span><span class="SourceBase">__FILE__</span><span class="SourceBase">)</span><span class="SourceBase">,</span> <span class="String"><span class="String">'</span>..<span class="String">'</span></span><span class="SourceBase">,</span><span class="String"><span class="String">&quot;</span>render<span class="String">&quot;</span></span><span class="SourceBase">,</span> output<span class="SourceBase">,</span><span class="String"><span class="String">&quot;</span><span class="SourceBase"><span class="SourceBase">#{</span>render_style<span class="SourceBase">}</span></span>.render<span class="String">&quot;</span></span><span class="SourceBase">)</span>
+<span class="line-numbers">   6 </span>       css_class <span class="Keyword">=</span> render_style
+<span class="line-numbers">   7 </span>       render_options <span class="Keyword">=</span> <span class="SourceBase">YAML</span><span class="SourceBase"><span class="SourceBase">.</span><span class="FunctionName">load</span></span><span class="SourceBase">(</span> <span class="SourceBase">File</span><span class="SourceBase"><span class="SourceBase">.</span><span class="FunctionName">open</span></span><span class="SourceBase">(</span>  renderer <span class="SourceBase">)</span> <span class="SourceBase">)</span>
+<span class="line-numbers">   8 </span>       <span class="Keyword">if</span> output <span class="Keyword">==</span> <span class="String"><span class="String">&quot;</span>xhtml<span class="String">&quot;</span></span>
+<span class="line-numbers">   9 </span>          render_processor <span class="Keyword">=</span> <span class="SourceBase">HtmlProcessor</span><span class="SourceBase"><span class="SourceBase">.</span><span class="FunctionName">new</span></span><span class="SourceBase">(</span> render_options<span class="SourceBase">,</span> line_numbers <span class="SourceBase">)</span>
+<span class="line-numbers">  10 </span>          <span class="SourceBase"><span class="SourceBase">@</span>syntaxes</span><span class="SourceBase">[</span>syntax_name<span class="SourceBase">]</span><span class="SourceBase"><span class="SourceBase">.</span><span class="FunctionName">parse</span></span><span class="SourceBase">(</span> text<span class="SourceBase">,</span>  render_processor <span class="SourceBase">)</span>
+<span class="line-numbers">  11 </span>          <span class="String"><span class="String">&quot;</span>&lt;pre class =<span class="StringEscapes">\&quot;</span><span class="SourceBase"><span class="SourceBase">#{</span>css_class<span class="SourceBase">}</span></span><span class="StringEscapes">\&quot;</span>&gt;<span class="SourceBase"><span class="SourceBase">#{</span>render_processor<span class="SourceBase"><span class="SourceBase">.</span><span class="FunctionName">string</span></span><span class="SourceBase">}</span></span>&lt;/pre&gt;<span class="String">&quot;</span></span>
+<span class="line-numbers">  12 </span>       <span class="Keyword">else</span>
+<span class="line-numbers">  13 </span>          <span class="Keyword">raise</span><span class="SourceBase">(</span> <span class="SourceBase">ArgumentError</span><span class="SourceBase">,</span> <span class="String"><span class="String">&quot;</span>Output for <span class="SourceBase"><span class="SourceBase">#{</span>output<span class="SourceBase">}</span></span> is not yet implemented<span class="String">&quot;</span></span> <span class="SourceBase">)</span>
+<span class="line-numbers">  14 </span>       <span class="Keyword">end</span>
+<span class="line-numbers">  15 </span>    <span class="Keyword">end</span>
+<span class="line-numbers">  16 </span> <span class="Keyword">end</span>
+</pre>
+
+<h2>amy</h2>
+
+<pre class="amy"><span class="line-numbers">   1 </span> 
+<span class="line-numbers">   2 </span> <span class="ControlKeyword">module</span> <span class="ModuleDefinitions">Uv</span>
+<span class="line-numbers">   3 </span>    <span class="ControlKeyword">def</span> <span class="FunctionName">Uv.parse</span> text<span class="Punctuation">,</span> output <span class="KeywordOperator">=</span> <span class="String"><span class="Punctuation">&quot;</span>xhtml<span class="Punctuation">&quot;</span></span><span class="Punctuation">,</span> syntax_name <span class="KeywordOperator">=</span> <span class="BuiltInConstant">nil</span><span class="Punctuation">,</span> line_numbers <span class="KeywordOperator">=</span> <span class="BuiltInConstant">false</span><span class="Punctuation">,</span> render_style <span class="KeywordOperator">=</span> <span class="String"><span class="Punctuation">&quot;</span>classic<span class="Punctuation">&quot;</span></span>
+<span class="line-numbers">   4 </span>       init_syntaxes <span class="ControlKeyword">unless</span> <span class="Variable"><span class="Punctuation">@</span>syntaxes</span>
+<span class="line-numbers">   5 </span>       renderer <span class="KeywordOperator">=</span> <span class="LibraryClassType">File</span><span class="Punctuation">.</span><span class="FunctionName">join</span><span class="Punctuation">(</span> <span class="LibraryClassType">File</span><span class="Punctuation">.</span><span class="FunctionName">dirname</span><span class="Punctuation">(</span><span class="Variable">__FILE__</span><span class="Punctuation">)</span><span class="Punctuation">,</span> <span class="String"><span class="Punctuation">'</span>..<span class="Punctuation">'</span></span><span class="Punctuation">,</span><span class="String"><span class="Punctuation">&quot;</span>render<span class="Punctuation">&quot;</span></span><span class="Punctuation">,</span> output<span class="Punctuation">,</span><span class="String"><span class="Punctuation">&quot;</span><span class="String"><span class="Punctuation">#{</span>render_style<span class="Punctuation">}</span></span>.render<span class="Punctuation">&quot;</span></span><span class="Punctuation">)</span>
+<span class="line-numbers">   6 </span>       css_class <span class="KeywordOperator">=</span> render_style
+<span class="line-numbers">   7 </span>       render_options <span class="KeywordOperator">=</span> <span class="Variable">YAML</span><span class="Punctuation">.</span><span class="FunctionName">load</span><span class="Punctuation">(</span> <span class="LibraryClassType">File</span><span class="Punctuation">.</span><span class="FunctionName">open</span><span class="Punctuation">(</span>  renderer <span class="Punctuation">)</span> <span class="Punctuation">)</span>
+<span class="line-numbers">   8 </span>       <span class="ControlKeyword">if</span> output <span class="KeywordOperator">==</span> <span class="String"><span class="Punctuation">&quot;</span>xhtml<span class="Punctuation">&quot;</span></span>
+<span class="line-numbers">   9 </span>          render_processor <span class="KeywordOperator">=</span> <span class="LibraryClassType">HtmlProcessor</span><span class="Punctuation">.</span><span class="FunctionName">new</span><span class="Punctuation">(</span> render_options<span class="Punctuation">,</span> line_numbers <span class="Punctuation">)</span>
+<span class="line-numbers">  10 </span>          <span class="Variable"><span class="Punctuation">@</span>syntaxes</span><span class="Punctuation">[</span>syntax_name<span class="Punctuation">]</span><span class="Punctuation">.</span><span class="FunctionName">parse</span><span class="Punctuation">(</span> text<span class="Punctuation">,</span>  render_processor <span class="Punctuation">)</span>
+<span class="line-numbers">  11 </span>          <span class="String"><span class="Punctuation">&quot;</span>&lt;pre class =<span class="CharacterConstant">\&quot;</span><span class="String"><span class="Punctuation">#{</span>css_class<span class="Punctuation">}</span></span><span class="CharacterConstant">\&quot;</span>&gt;<span class="String"><span class="Punctuation">#{</span>render_processor<span class="String"><span class="Punctuation">.</span><span class="FunctionName">string</span></span><span class="Punctuation">}</span></span>&lt;/pre&gt;<span class="Punctuation">&quot;</span></span>
+<span class="line-numbers">  12 </span>       <span class="ControlKeyword">else</span>
+<span class="line-numbers">  13 </span>          <span class="Keyword">raise</span><span class="Punctuation">(</span> <span class="Variable">ArgumentError</span><span class="Punctuation">,</span> <span class="String"><span class="Punctuation">&quot;</span>Output for <span class="String"><span class="Punctuation">#{</span>output<span class="Punctuation">}</span></span> is not yet implemented<span class="Punctuation">&quot;</span></span> <span class="Punctuation">)</span>
+<span class="line-numbers">  14 </span>       <span class="ControlKeyword">end</span>
+<span class="line-numbers">  15 </span>    <span class="ControlKeyword">end</span>
+<span class="line-numbers">  16 </span> <span class="ControlKeyword">end</span>
+</pre>
+
+<h2>blackboard</h2>
+
+<pre class="blackboard"><span class="line-numbers">   1 </span> 
+<span class="line-numbers">   2 </span> <span class="Keyword">module</span> <span class="Entity">Uv</span>
+<span class="line-numbers">   3 </span>    <span class="Keyword">def</span> <span class="Entity">Uv.parse</span> text, output <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>xhtml<span class="String">&quot;</span></span>, syntax_name <span class="Keyword">=</span> <span class="Constant">nil</span>, line_numbers <span class="Keyword">=</span> <span class="Constant">false</span>, render_style <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>classic<span class="String">&quot;</span></span>
+<span class="line-numbers">   4 </span>       init_syntaxes <span class="Keyword">unless</span> <span class="Variable"><span class="Variable">@</span>syntaxes</span>
+<span class="line-numbers">   5 </span>       renderer <span class="Keyword">=</span> <span class="Support">File</span>.<span class="Entity">join</span>( <span class="Support">File</span>.<span class="Entity">dirname</span>(<span class="Variable">__FILE__</span>), <span class="String"><span class="String">'</span>..<span class="String">'</span></span>,<span class="String"><span class="String">&quot;</span>render<span class="String">&quot;</span></span>, output,<span class="String"><span class="String">&quot;</span><span class="String"><span class="String">#{</span>render_style<span class="String">}</span></span>.render<span class="String">&quot;</span></span>)
+<span class="line-numbers">   6 </span>       css_class <span class="Keyword">=</span> render_style
+<span class="line-numbers">   7 </span>       render_options <span class="Keyword">=</span> <span class="Variable">YAML</span>.<span class="Entity">load</span>( <span class="Support">File</span>.<span class="Entity">open</span>(  renderer ) )
+<span class="line-numbers">   8 </span>       <span class="Keyword">if</span> output <span class="Keyword">==</span> <span class="String"><span class="String">&quot;</span>xhtml<span class="String">&quot;</span></span>
+<span class="line-numbers">   9 </span>          render_processor <span class="Keyword">=</span> <span class="Support">HtmlProcessor</span>.<span class="Entity">new</span>( render_options, line_numbers )
+<span class="line-numbers">  10 </span>          <span class="Variable"><span class="Variable">@</span>syntaxes</span>[syntax_name].<span class="Entity">parse</span>( text,  render_processor )
+<span class="line-numbers">  11 </span>          <span class="String"><span class="String">&quot;</span>&lt;pre class =<span class="Constant">\&quot;</span><span class="String"><span class="String">#{</span>css_class<span class="String">}</span></span><span class="Constant">\&quot;</span>&gt;<span class="String"><span class="String">#{</span>render_processor<span class="String"><span class="String">.</span><span class="Entity">string</span></span><span class="String">}</span></span>&lt;/pre&gt;<span class="String">&quot;</span></span>
+<span class="line-numbers">  12 </span>       <span class="Keyword">else</span>
+<span class="line-numbers">  13 </span>          <span class="Keyword">raise</span>( <span class="Variable">ArgumentError</span>, <span class="String"><span class="String">&quot;</span>Output for <span class="String"><span class="String">#{</span>output<span class="String">}</span></span> is not yet implemented<span class="String">&quot;</span></span> )
+<span class="line-numbers">  14 </span>       <span class="Keyword">end</span>
+<span class="line-numbers">  15 </span>    <span class="Keyword">end</span>
+<span class="line-numbers">  16 </span> <span class="Keyword">end</span>
+</pre>
+
+<h2>brilliance_black</h2>
+
+<pre class="brilliance_black"><span class="line-numbers">   1 </span> 
+<span class="line-numbers">   2 </span> <span class="Source"><span class="KeywordControl">module</span> <span class="Source">Uv</span></span>
+<span class="line-numbers">   3 </span>    <span class="Function"><span class="KeywordControl">def</span> <span class="FunctionName">Uv.parse</span></span> text<span class="MiscPunctuation">,</span> output <span class="KeywordOperator">=</span> <span class="String"><span class="StringPunctuation">&quot;</span>xhtml<span class="StringPunctuation">&quot;</span></span><span class="MiscPunctuation">,</span> syntax_name <span class="KeywordOperator">=</span> <span class="BuiltInConstant">nil</span><span class="MiscPunctuation">,</span> line_numbers <span class="KeywordOperator">=</span> <span class="BuiltInConstant">false</span><span class="MiscPunctuation">,</span> render_style <span class="KeywordOperator">=</span> <span class="String"><span class="StringPunctuation">&quot;</span>classic<span class="StringPunctuation">&quot;</span></span>
+<span class="line-numbers">   4 </span>       init_syntaxes <span class="KeywordControl">unless</span> <span class="InstanceVariable"><span class="VariablePunctuation">@</span>syntaxes</span>
+<span class="line-numbers">   5 </span>       renderer <span class="KeywordOperator">=</span> <span class="LibraryClassType">File</span><span class="Function"><span class="MetaDelimiter">.</span><span class="SpecialFunction">join</span></span><span class="MetaBraceCurlyFunction">(</span> <span class="LibraryClassType">File</span><span class="Function"><span class="MetaDelimiter">.</span><span class="SpecialFunction">dirname</span></span><span class="MetaBraceCurlyFunction">(</span><span class="Variable">__FILE__</span><span class="MetaBraceCurlyFunction">)</span><span class="MiscPunctuation">,</span> <span class="String"><span class="StringPunctuation">'</span>..<span class="StringPunctuation">'</span></span><span class="MiscPunctuation">,</span><span class="String"><span class="StringPunctuation">&quot;</span>render<span class="StringPunctuation">&quot;</span></span><span class="MiscPunctuation">,</span> output<span class="MiscPunctuation">,</span><span class="String"><span class="StringPunctuation">&quot;</span><span class="SourceStringSource"><span class="StringEmbeddedSource">#{</span>render_style<span class="StringEmbeddedSource">}</span></span>.render<span class="StringPunctuation">&quot;</span></span><span class="MetaBraceCurlyFunction">)</span>
+<span class="line-numbers">   6 </span>       css_class <span class="KeywordOperator">=</span> render_style
+<span class="line-numbers">   7 </span>       render_options <span class="KeywordOperator">=</span> <span class="ConstantVariable">YAML</span><span class="Function"><span class="MetaDelimiter">.</span><span class="SpecialFunction">load</span></span><span class="MetaBraceCurlyFunction">(</span> <span class="LibraryClassType">File</span><span class="Function"><span class="MetaDelimiter">.</span><span class="SpecialFunction">open</span></span><span class="MetaBraceCurlyFunction">(</span>  renderer <span class="MetaBraceCurlyFunction">)</span> <span class="MetaBraceCurlyFunction">)</span>
+<span class="line-numbers">   8 </span>       <span class="KeywordControl">if</span> output <span class="KeywordOperator">==</span> <span class="String"><span class="StringPunctuation">&quot;</span>xhtml<span class="StringPunctuation">&quot;</span></span>
+<span class="line-numbers">   9 </span>          render_processor <span class="KeywordOperator">=</span> <span class="LibraryClassType">HtmlProcessor</span><span class="Function"><span class="MetaDelimiter">.</span><span class="SpecialFunction">new</span></span><span class="MetaBraceCurlyFunction">(</span> render_options<span class="MiscPunctuation">,</span> line_numbers <span class="MetaBraceCurlyFunction">)</span>
+<span class="line-numbers">  10 </span>          <span class="InstanceVariable"><span class="VariablePunctuation">@</span>syntaxes</span><span class="ArrayPunctuation">[</span>syntax_name<span class="ArrayPunctuation">]</span><span class="Function"><span class="MetaDelimiter">.</span><span class="SpecialFunction">parse</span></span><span class="MetaBraceCurlyFunction">(</span> text<span class="MiscPunctuation">,</span>  render_processor <span class="MetaBraceCurlyFunction">)</span>
+<span class="line-numbers">  11 </span>          <span class="String"><span class="StringPunctuation">&quot;</span>&lt;pre class =<span class="CharacterConstant">\&quot;</span><span class="SourceStringSource"><span class="StringEmbeddedSource">#{</span>css_class<span class="StringEmbeddedSource">}</span></span><span class="CharacterConstant">\&quot;</span>&gt;<span class="SourceStringSource"><span class="StringEmbeddedSource">#{</span>render_processor<span class="Function"><span class="MetaDelimiter">.</span><span class="SpecialFunction">string</span></span><span class="StringEmbeddedSource">}</span></span>&lt;/pre&gt;<span class="StringPunctuation">&quot;</span></span>
+<span class="line-numbers">  12 </span>       <span class="KeywordControl">else</span>
+<span class="line-numbers">  13 </span>          <span class="SpecialFunction">raise</span><span class="MetaBraceCurlyFunction">(</span> <span class="ConstantVariable">ArgumentError</span><span class="MiscPunctuation">,</span> <span class="String"><span class="StringPunctuation">&quot;</span>Output for <span class="SourceStringSource"><span class="StringEmbeddedSource">#{</span>output<span class="StringEmbeddedSource">}</span></span> is not yet implemented<span class="StringPunctuation">&quot;</span></span> <span class="MetaBraceCurlyFunction">)</span>
+<span class="line-numbers">  14 </span>       <span class="KeywordControl">end</span>
+<span class="line-numbers">  15 </span>    <span class="KeywordControl">end</span>
+<span class="line-numbers">  16 </span> <span class="KeywordControl">end</span>
+</pre>
+
+<h2>brilliance_dull</h2>
+
+<pre class="brilliance_dull"><span class="line-numbers">   1 </span> 
+<span class="line-numbers">   2 </span> <span class="Source"><span class="KeywordControl">module</span> <span class="Source">Uv</span></span>
+<span class="line-numbers">   3 </span>    <span class="FunctionDeclaration"><span class="KeywordControl">def</span> <span class="FunctionDeclarationName">Uv.parse</span></span> text<span class="MiscPunctuation">,</span> output <span class="KeywordOperatorAssignment">=</span> <span class="String"><span class="StringPunctuation">&quot;</span>xhtml<span class="StringPunctuation">&quot;</span></span><span class="MiscPunctuation">,</span> syntax_name <span class="KeywordOperatorAssignment">=</span> <span class="BuiltInConstant">nil</span><span class="MiscPunctuation">,</span> line_numbers <span class="KeywordOperatorAssignment">=</span> <span class="BuiltInConstant">false</span><span class="MiscPunctuation">,</span> render_style <span class="KeywordOperatorAssignment">=</span> <span class="String"><span class="StringPunctuation">&quot;</span>classic<span class="StringPunctuation">&quot;</span></span>
+<span class="line-numbers">   4 </span>       init_syntaxes <span class="KeywordControl">unless</span> <span class="InstanceVariable"><span class="VariablePunctuation">@</span>syntaxes</span>
+<span class="line-numbers">   5 </span>       renderer <span class="KeywordOperatorAssignment">=</span> <span class="LibraryClassType">File</span><span class="FunctionDeclaration"><span class="MetaDelimiter">.</span><span class="FunctionCall">join</span></span><span class="FunctionCallArgumentsPunctuation">(</span> <span class="LibraryClassType">File</span><span class="FunctionDeclaration"><span class="MetaDelimiter">.</span><span class="FunctionCall">dirname</span></span><span class="FunctionCallArgumentsPunctuation">(</span><span class="Variable">__FILE__</span><span class="FunctionCallArgumentsPunctuation">)</span><span class="MiscPunctuation">,</span> <span class="String"><span class="StringPunctuation">'</span>..<span class="StringPunctuation">'</span></span><span class="MiscPunctuation">,</span><span class="String"><span class="StringPunctuation">&quot;</span>render<span class="StringPunctuation">&quot;</span></span><span class="MiscPunctuation">,</span> output<span class="MiscPunctuation">,</span><span class="String"><span class="StringPunctuation">&quot;</span><span class="SourceStringSource"><span class="StringEmbeddedSource">#{</span>render_style<span class="StringEmbeddedSource">}</span></span>.render<span class="StringPunctuation">&quot;</span></span><span class="FunctionCallArgumentsPunctuation">)</span>
+<span class="line-numbers">   6 </span>       css_class <span class="KeywordOperatorAssignment">=</span> render_style
+<span class="line-numbers">   7 </span>       render_options <span class="KeywordOperatorAssignment">=</span> <span class="ConstantVariable">YAML</span><span class="FunctionDeclaration"><span class="MetaDelimiter">.</span><span class="FunctionCall">load</span></span><span class="FunctionCallArgumentsPunctuation">(</span> <span class="LibraryClassType">File</span><span class="FunctionDeclaration"><span class="MetaDelimiter">.</span><span class="FunctionCall">open</span></span><span class="FunctionCallArgumentsPunctuation">(</span>  renderer <span class="FunctionCallArgumentsPunctuation">)</span> <span class="FunctionCallArgumentsPunctuation">)</span>
+<span class="line-numbers">   8 </span>       <span class="KeywordControl">if</span> output <span class="KeywordOperatorComparison">==</span> <span class="String"><span class="StringPunctuation">&quot;</span>xhtml<span class="StringPunctuation">&quot;</span></span>
+<span class="line-numbers">   9 </span>          render_processor <span class="KeywordOperatorAssignment">=</span> <span class="LibraryClassType">HtmlProcessor</span><span class="FunctionDeclaration"><span class="MetaDelimiter">.</span><span class="FunctionCall">new</span></span><span class="FunctionCallArgumentsPunctuation">(</span> render_options<span class="MiscPunctuation">,</span> line_numbers <span class="FunctionCallArgumentsPunctuation">)</span>
+<span class="line-numbers">  10 </span>          <span class="InstanceVariable"><span class="VariablePunctuation">@</span>syntaxes</span><span class="ArrayPunctuation">[</span>syntax_name<span class="ArrayPunctuation">]</span><span class="FunctionDeclaration"><span class="MetaDelimiter">.</span><span class="FunctionCall">parse</span></span><span class="FunctionCallArgumentsPunctuation">(</span> text<span class="MiscPunctuation">,</span>  render_processor <span class="FunctionCallArgumentsPunctuation">)</span>
+<span class="line-numbers">  11 </span>          <span class="String"><span class="StringPunctuation">&quot;</span>&lt;pre class =<span class="CharacterConstant">\&quot;</span><span class="SourceStringSource"><span class="StringEmbeddedSource">#{</span>css_class<span class="StringEmbeddedSource">}</span></span><span class="CharacterConstant">\&quot;</span>&gt;<span class="SourceStringSource"><span class="StringEmbeddedSource">#{</span>render_processor<span class="FunctionCallWithoutArguments"><span class="MetaDelimiter">.</span><span class="FunctionCallWithoutArguments">string</span></span><span class="StringEmbeddedSource">}</span></span>&lt;/pre&gt;<span class="StringPunctuation">&quot;</span></span>
+<span class="line-numbers">  12 </span>       <span class="KeywordControl">else</span>
+<span class="line-numbers">  13 </span>          <span class="FunctionCall">raise</span><span class="FunctionCallArgumentsPunctuation">(</span> <span class="ConstantVariable">ArgumentError</span><span class="MiscPunctuation">,</span> <span class="String"><span class="StringPunctuation">&quot;</span>Output for <span class="SourceStringSource"><span class="StringEmbeddedSource">#{</span>output<span class="StringEmbeddedSource">}</span></span> is not yet implemented<span class="StringPunctuation">&quot;</span></span> <span class="FunctionCallArgumentsPunctuation">)</span>
+<span class="line-numbers">  14 </span>       <span class="KeywordControl">end</span>
+<span class="line-numbers">  15 </span>    <span class="KeywordControl">end</span>
+<span class="line-numbers">  16 </span> <span class="KeywordControl">end</span>
+</pre>
+
+<h2>cobalt</h2>
+
+<pre class="cobalt"><span class="line-numbers">   1 </span> 
+<span class="line-numbers">   2 </span> <span class="Keyword">module</span> <span class="Entity">Uv</span>
+<span class="line-numbers">   3 </span>    <span class="Keyword">def</span> <span class="Entity">Uv.parse</span> text<span class="Punctuation">,</span> output <span class="Keyword">=</span> <span class="String"><span class="Punctuation">&quot;</span>xhtml<span class="Punctuation">&quot;</span></span><span class="Punctuation">,</span> syntax_name <span class="Keyword">=</span> <span class="Constant">nil</span><span class="Punctuation">,</span> line_numbers <span class="Keyword">=</span> <span class="Constant">false</span><span class="Punctuation">,</span> render_style <span class="Keyword">=</span> <span class="String"><span class="Punctuation">&quot;</span>classic<span class="Punctuation">&quot;</span></span>
+<span class="line-numbers">   4 </span>       init_syntaxes <span class="Keyword">unless</span> <span class="Variable"><span class="Punctuation">@</span>syntaxes</span>
+<span class="line-numbers">   5 </span>       renderer <span class="Keyword">=</span> <span class="Support">File</span><span class="FunctionCall"><span class="Punctuation">.</span><span class="Entity">join</span></span><span class="Punctuation">(</span> <span class="Support">File</span><span class="FunctionCall"><span class="Punctuation">.</span><span class="Entity">dirname</span></span><span class="Punctuation">(</span><span class="LangVariable">__FILE__</span><span class="Punctuation">)</span><span class="Punctuation">,</span> <span class="String"><span class="Punctuation">'</span>..<span class="Punctuation">'</span></span><span class="Punctuation">,</span><span class="String"><span class="Punctuation">&quot;</span>render<span class="Punctuation">&quot;</span></span><span class="Punctuation">,</span> output<span class="Punctuation">,</span><span class="String"><span class="Punctuation">&quot;</span><span class="StringEmbeddedSource"><span class="Punctuation">#{</span>render_style<span class="Punctuation">}</span></span>.render<span class="Punctuation">&quot;</span></span><span class="Punctuation">)</span>
+<span class="line-numbers">   6 </span>       css_class <span class="Keyword">=</span> render_style
+<span class="line-numbers">   7 </span>       render_options <span class="Keyword">=</span> <span class="Variable">YAML</span><span class="FunctionCall"><span class="Punctuation">.</span><span class="Entity">load</span></span><span class="Punctuation">(</span> <span class="Support">File</span><span class="FunctionCall"><span class="Punctuation">.</span><span class="Entity">open</span></span><span class="Punctuation">(</span>  renderer <span class="Punctuation">)</span> <span class="Punctuation">)</span>
+<span class="line-numbers">   8 </span>       <span class="Keyword">if</span> output <span class="Keyword">==</span> <span class="String"><span class="Punctuation">&quot;</span>xhtml<span class="Punctuation">&quot;</span></span>
+<span class="line-numbers">   9 </span>          render_processor <span class="Keyword">=</span> <span class="Support">HtmlProcessor</span><span class="FunctionCall"><span class="Punctuation">.</span><span class="Entity">new</span></span><span class="Punctuation">(</span> render_options<span class="Punctuation">,</span> line_numbers <span class="Punctuation">)</span>
+<span class="line-numbers">  10 </span>          <span class="Variable"><span class="Punctuation">@</span>syntaxes</span><span class="Punctuation">[</span>syntax_name<span class="Punctuation">]</span><span class="FunctionCall"><span class="Punctuation">.</span><span class="Entity">parse</span></span><span class="Punctuation">(</span> text<span class="Punctuation">,</span>  render_processor <span class="Punctuation">)</span>
+<span class="line-numbers">  11 </span>          <span class="String"><span class="Punctuation">&quot;</span>&lt;pre class =<span class="StringConstant">\&quot;</span><span class="StringEmbeddedSource"><span class="Punctuation">#{</span>css_class<span class="Punctuation">}</span></span><span class="StringConstant">\&quot;</span>&gt;<span class="StringEmbeddedSource"><span class="Punctuation">#{</span>render_processor<span class="FunctionCall"><span class="Punctuation">.</span><span class="Entity">string</span></span><span class="Punctuation">}</span></span>&lt;/pre&gt;<span class="Punctuation">&quot;</span></span>
+<span class="line-numbers">  12 </span>       <span class="Keyword">else</span>
+<span class="line-numbers">  13 </span>          <span class="Keyword">raise</span><span class="Punctuation">(</span> <span class="Variable">ArgumentError</span><span class="Punctuation">,</span> <span class="String"><span class="Punctuation">&quot;</span>Output for <span class="StringEmbeddedSource"><span class="Punctuation">#{</span>output<span class="Punctuation">}</span></span> is not yet implemented<span class="Punctuation">&quot;</span></span> <span class="Punctuation">)</span>
+<span class="line-numbers">  14 </span>       <span class="Keyword">end</span>
+<span class="line-numbers">  15 </span>    <span class="Keyword">end</span>
+<span class="line-numbers">  16 </span> <span class="Keyword">end</span>
+</pre>
+
+<h2>dawn</h2>
+
+<pre class="dawn"><span class="line-numbers">   1 </span> 
+<span class="line-numbers">   2 </span> <span class="Keyword">module</span> <span class="Entity">Uv</span>
+<span class="line-numbers">   3 </span>    <span class="Keyword">def</span> <span class="Entity">Uv.parse</span> text<span class="PunctuationSeparator">,</span> output <span class="Keyword">=</span> &quot;xhtml&quot;<span class="PunctuationSeparator">,</span> syntax_name <span class="Keyword">=</span> <span class="Constant">nil</span><span class="PunctuationSeparator">,</span> line_numbers <span class="Keyword">=</span> <span class="Constant">false</span><span class="PunctuationSeparator">,</span> render_style <span class="Keyword">=</span> &quot;classic&quot;
+<span class="line-numbers">   4 </span>       init_syntaxes <span class="Keyword">unless</span> <span class="Variable"><span class="Variable">@</span>syntaxes</span>
+<span class="line-numbers">   5 </span>       renderer <span class="Keyword">=</span> <span class="Support">File</span><span class="PunctuationSeparator">.</span><span class="Entity">join</span>( <span class="Support">File</span><span class="PunctuationSeparator">.</span><span class="Entity">dirname</span>(<span class="Variable">__FILE__</span>)<span class="PunctuationSeparator">,</span> '..'<span class="PunctuationSeparator">,</span>&quot;render&quot;<span class="PunctuationSeparator">,</span> output<span class="PunctuationSeparator">,</span>&quot;<span class="StringEmbeddedSource"><span class="StringEmbeddedSource">#{</span>render_style<span class="StringEmbeddedSource">}</span></span>.render&quot;)
+<span class="line-numbers">   6 </span>       css_class <span class="Keyword">=</span> render_style
+<span class="line-numbers">   7 </span>       render_options <span class="Keyword">=</span> <span class="Variable">YAML</span><span class="PunctuationSeparator">.</span><span class="Entity">load</span>( <span class="Support">File</span><span class="PunctuationSeparator">.</span><span class="Entity">open</span>(  renderer ) )
+<span class="line-numbers">   8 </span>       <span class="Keyword">if</span> output <span class="Keyword">==</span> &quot;xhtml&quot;
+<span class="line-numbers">   9 </span>          render_processor <span class="Keyword">=</span> <span class="Support">HtmlProcessor</span><span class="PunctuationSeparator">.</span><span class="Entity">new</span>( render_options<span class="PunctuationSeparator">,</span> line_numbers )
+<span class="line-numbers">  10 </span>          <span class="Variable"><span class="Variable">@</span>syntaxes</span>[syntax_name]<span class="PunctuationSeparator">.</span><span class="Entity">parse</span>( text<span class="PunctuationSeparator">,</span>  render_processor )
+<span class="line-numbers">  11 </span>          &quot;&lt;pre class =<span class="StringConstant">\&quot;</span><span class="StringEmbeddedSource"><span class="StringEmbeddedSource">#{</span>css_class<span class="StringEmbeddedSource">}</span></span><span class="StringConstant">\&quot;</span>&gt;<span class="StringEmbeddedSource"><span class="StringEmbeddedSource">#{</span>render_processor<span class="StringEmbeddedSource"><span class="PunctuationSeparator">.</span><span class="Entity">string</span></span><span class="StringEmbeddedSource">}</span></span>&lt;/pre&gt;&quot;
+<span class="line-numbers">  12 </span>       <span class="Keyword">else</span>
+<span class="line-numbers">  13 </span>          <span class="Keyword">raise</span>( <span class="Variable">ArgumentError</span><span class="PunctuationSeparator">,</span> &quot;Output for <span class="StringEmbeddedSource"><span class="StringEmbeddedSource">#{</span>output<span class="StringEmbeddedSource">}</span></span> is not yet implemented&quot; )
+<span class="line-numbers">  14 </span>       <span class="Keyword">end</span>
+<span class="line-numbers">  15 </span>    <span class="Keyword">end</span>
+<span class="line-numbers">  16 </span> <span class="Keyword">end</span>
+</pre>
+
+<h2>eiffel</h2>
+
+<pre class="eiffel"><span class="line-numbers">   1 </span> 
+<span class="line-numbers">   2 </span> <span class="Keyword">module</span> <span class="TypeName">Uv</span>
+<span class="line-numbers">   3 </span>    <span class="Keyword">def</span> <span class="FunctionName">Uv.parse</span> text, output <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>xhtml<span class="String">&quot;</span></span>, syntax_name <span class="Keyword">=</span> <span class="BuiltInConstant">nil</span>, line_numbers <span class="Keyword">=</span> <span class="BuiltInConstant">false</span>, render_style <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>classic<span class="String">&quot;</span></span>
+<span class="line-numbers">   4 </span>       init_syntaxes <span class="Keyword">unless</span> <span class="Variable"><span class="Variable">@</span>syntaxes</span>
+<span class="line-numbers">   5 </span>       renderer <span class="Keyword">=</span> <span class="LibraryObject">File</span>.<span class="FunctionName">join</span>( <span class="LibraryObject">File</span>.<span class="FunctionName">dirname</span>(<span class="Variable">__FILE__</span>), <span class="String"><span class="String">'</span>..<span class="String">'</span></span>,<span class="String"><span class="String">&quot;</span>render<span class="String">&quot;</span></span>, output,<span class="String"><span class="String">&quot;</span><span class="StringInterpolation"><span class="StringInterpolation">#{</span>render_style<span class="StringInterpolation">}</span></span>.render<span class="String">&quot;</span></span>)
+<span class="line-numbers">   6 </span>       css_class <span class="Keyword">=</span> render_style
+<span class="line-numbers">   7 </span>       render_options <span class="Keyword">=</span> <span class="Variable">YAML</span>.<span class="FunctionName">load</span>( <span class="LibraryObject">File</span>.<span class="FunctionName">open</span>(  renderer ) )
+<span class="line-numbers">   8 </span>       <span class="Keyword">if</span> output <span class="Keyword">==</span> <span class="String"><span class="String">&quot;</span>xhtml<span class="String">&quot;</span></span>
+<span class="line-numbers">   9 </span>          render_processor <span class="Keyword">=</span> <span class="LibraryObject">HtmlProcessor</span>.<span class="FunctionName">new</span>( render_options, line_numbers )
+<span class="line-numbers">  10 </span>          <span class="Variable"><span class="Variable">@</span>syntaxes</span>[syntax_name].<span class="FunctionName">parse</span>( text,  render_processor )
+<span class="line-numbers">  11 </span>          <span class="String"><span class="String">&quot;</span>&lt;pre class =<span class="StringInterpolation">\&quot;</span><span class="StringInterpolation"><span class="StringInterpolation">#{</span>css_class<span class="StringInterpolation">}</span></span><span class="StringInterpolation">\&quot;</span>&gt;<span class="StringInterpolation"><span class="StringInterpolation">#{</span>render_processor<span class="StringInterpolation"><span class="StringInterpolation">.</span><span class="FunctionName">string</span></span><span class="StringInterpolation">}</span></span>&lt;/pre&gt;<span class="String">&quot;</span></span>
+<span class="line-numbers">  12 </span>       <span class="Keyword">else</span>
+<span class="line-numbers">  13 </span>          <span class="Keyword">raise</span>( <span class="Variable">ArgumentError</span>, <span class="String"><span class="String">&quot;</span>Output for <span class="StringInterpolation"><span class="StringInterpolation">#{</span>output<span class="StringInterpolation">}</span></span> is not yet implemented<span class="String">&quot;</span></span> )
+<span class="line-numbers">  14 </span>       <span class="Keyword">end</span>
+<span class="line-numbers">  15 </span>    <span class="Keyword">end</span>
+<span class="line-numbers">  16 </span> <span class="Keyword">end</span>
+</pre>
+
+<h2>espresso_libre</h2>
+
+<pre class="espresso_libre"><span class="line-numbers">   1 </span> 
+<span class="line-numbers">   2 </span> <span class="Keyword">module</span> <span class="TypeName">Uv</span>
+<span class="line-numbers">   3 </span>    <span class="Keyword">def</span> <span class="FunctionName">Uv.parse</span> text, output <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>xhtml<span class="String">&quot;</span></span>, syntax_name <span class="Keyword">=</span> <span class="BuiltInConstant">nil</span>, line_numbers <span class="Keyword">=</span> <span class="BuiltInConstant">false</span>, render_style <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>classic<span class="String">&quot;</span></span>
+<span class="line-numbers">   4 </span>       init_syntaxes <span class="Keyword">unless</span> <span class="Variable"><span class="Variable">@</span>syntaxes</span>
+<span class="line-numbers">   5 </span>       renderer <span class="Keyword">=</span> <span class="LibraryObject">File</span>.<span class="FunctionName">join</span>( <span class="LibraryObject">File</span>.<span class="FunctionName">dirname</span>(<span class="Variable">__FILE__</span>), <span class="String"><span class="String">'</span>..<span class="String">'</span></span>,<span class="String"><span class="String">&quot;</span>render<span class="String">&quot;</span></span>, output,<span class="String"><span class="String">&quot;</span><span class="StringInterpolation"><span class="StringInterpolation">#{</span>render_style<span class="StringInterpolation">}</span></span>.render<span class="String">&quot;</span></span>)
+<span class="line-numbers">   6 </span>       css_class <span class="Keyword">=</span> render_style
+<span class="line-numbers">   7 </span>       render_options <span class="Keyword">=</span> <span class="Variable">YAML</span>.<span class="FunctionName">load</span>( <span class="LibraryObject">File</span>.<span class="FunctionName">open</span>(  renderer ) )
+<span class="line-numbers">   8 </span>       <span class="Keyword">if</span> output <span class="Keyword">==</span> <span class="String"><span class="String">&quot;</span>xhtml<span class="String">&quot;</span></span>
+<span class="line-numbers">   9 </span>          render_processor <span class="Keyword">=</span> <span class="LibraryObject">HtmlProcessor</span>.<span class="FunctionName">new</span>( render_options, line_numbers )
+<span class="line-numbers">  10 </span>          <span class="Variable"><span class="Variable">@</span>syntaxes</span>[syntax_name].<span class="FunctionName">parse</span>( text,  render_processor )
+<span class="line-numbers">  11 </span>          <span class="String"><span class="String">&quot;</span>&lt;pre class =<span class="StringInterpolation">\&quot;</span><span class="StringInterpolation"><span class="StringInterpolation">#{</span>css_class<span class="StringInterpolation">}</span></span><span class="StringInterpolation">\&quot;</span>&gt;<span class="StringInterpolation"><span class="StringInterpolation">#{</span>render_processor<span class="StringInterpolation"><span class="StringInterpolation">.</span><span class="FunctionName">string</span></span><span class="StringInterpolation">}</span></span>&lt;/pre&gt;<span class="String">&quot;</span></span>
+<span class="line-numbers">  12 </span>       <span class="Keyword">else</span>
+<span class="line-numbers">  13 </span>          <span class="Keyword">raise</span>( <span class="Variable">ArgumentError</span>, <span class="String"><span class="String">&quot;</span>Output for <span class="StringInterpolation"><span class="StringInterpolation">#{</span>output<span class="StringInterpolation">}</span></span> is not yet implemented<span class="String">&quot;</span></span> )
+<span class="line-numbers">  14 </span>       <span class="Keyword">end</span>
+<span class="line-numbers">  15 </span>    <span class="Keyword">end</span>
+<span class="line-numbers">  16 </span> <span class="Keyword">end</span>
+</pre>
+
+<h2>idle</h2>
+<pre class="idle"><span class="line-numbers">   1 </span> 
+<span class="line-numbers">   2 </span> <span class="Keyword">module</span> <span class="TypeName">Uv</span>
+<span class="line-numbers">   3 </span>    <span class="Keyword">def</span> <span class="FunctionName">Uv.parse</span> text, output <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>xhtml<span class="String">&quot;</span></span>, syntax_name <span class="Keyword">=</span> <span class="BuiltInConstant">nil</span>, line_numbers <span class="Keyword">=</span> <span class="BuiltInConstant">false</span>, render_style <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>classic<span class="String">&quot;</span></span>
+<span class="line-numbers">   4 </span>       init_syntaxes <span class="Keyword">unless</span> <span class="Variable"><span class="Variable">@</span>syntaxes</span>
+<span class="line-numbers">   5 </span>       renderer <span class="Keyword">=</span> <span class="LibraryClassType">File</span>.<span class="FunctionName">join</span>( <span class="LibraryClassType">File</span>.<span class="FunctionName">dirname</span>(<span class="Variable">__FILE__</span>), <span class="String"><span class="String">'</span>..<span class="String">'</span></span>,<span class="String"><span class="String">&quot;</span>render<span class="String">&quot;</span></span>, output,<span class="String"><span class="String">&quot;</span><span class="String"><span class="String">#{</span>render_style<span class="String">}</span></span>.render<span class="String">&quot;</span></span>)
+<span class="line-numbers">   6 </span>       css_class <span class="Keyword">=</span> render_style
+<span class="line-numbers">   7 </span>       render_options <span class="Keyword">=</span> <span class="Variable">YAML</span>.<span class="FunctionName">load</span>( <span class="LibraryClassType">File</span>.<span class="FunctionName">open</span>(  renderer ) )
+<span class="line-numbers">   8 </span>       <span class="Keyword">if</span> output <span class="Keyword">==</span> <span class="String"><span class="String">&quot;</span>xhtml<span class="String">&quot;</span></span>
+<span class="line-numbers">   9 </span>          render_processor <span class="Keyword">=</span> <span class="LibraryClassType">HtmlProcessor</span>.<span class="FunctionName">new</span>( render_options, line_numbers )
+<span class="line-numbers">  10 </span>          <span class="Variable"><span class="Variable">@</span>syntaxes</span>[syntax_name].<span class="FunctionName">parse</span>( text,  render_processor )
+<span class="line-numbers">  11 </span>          <span class="String"><span class="String">&quot;</span>&lt;pre class =<span class="UserDefinedConstant">\&quot;</span><span class="String"><span class="String">#{</span>css_class<span class="String">}</span></span><span class="UserDefinedConstant">\&quot;</span>&gt;<span class="String"><span class="String">#{</span>render_processor<span class="String"><span class="String">.</span><span class="FunctionName">string</span></span><span class="String">}</span></span>&lt;/pre&gt;<span class="String">&quot;</span></span>
+<span class="line-numbers">  12 </span>       <span class="Keyword">else</span>
+<span class="line-numbers">  13 </span>          <span class="Keyword">raise</span>( <span class="Variable">ArgumentError</span>, <span class="String"><span class="String">&quot;</span>Output for <span class="String"><span class="String">#{</span>output<span class="String">}</span></span> is not yet implemented<span class="String">&quot;</span></span> )
+<span class="line-numbers">  14 </span>       <span class="Keyword">end</span>
+<span class="line-numbers">  15 </span>    <span class="Keyword">end</span>
+<span class="line-numbers">  16 </span> <span class="Keyword">end</span>
+</pre>
+
+<h2>iplastic</h2>
+
+<pre class="iplastic"><span class="line-numbers">   1 </span> 
+<span class="line-numbers">   2 </span> <span class="Keyword">module</span> <span class="TypeName">Uv</span>
+<span class="line-numbers">   3 </span>    <span class="Keyword">def</span> <span class="FunctionName">Uv.parse</span> text, output <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>xhtml<span class="String">&quot;</span></span>, syntax_name <span class="Keyword">=</span> <span class="Identifier">nil</span>, line_numbers <span class="Keyword">=</span> <span class="Identifier">false</span>, render_style <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>classic<span class="String">&quot;</span></span>
+<span class="line-numbers">   4 </span>       init_syntaxes <span class="Keyword">unless</span> @syntaxes
+<span class="line-numbers">   5 </span>       renderer <span class="Keyword">=</span> <span class="Support">File</span>.<span class="FunctionName">join</span>( <span class="Support">File</span>.<span class="FunctionName">dirname</span>(__FILE__), <span class="String"><span class="String">'</span>..<span class="String">'</span></span>,<span class="String"><span class="String">&quot;</span>render<span class="String">&quot;</span></span>, output,<span class="String"><span class="String">&quot;</span><span class="String"><span class="String">#{</span>render_style<span class="String">}</span></span>.render<span class="String">&quot;</span></span>)
+<span class="line-numbers">   6 </span>       css_class <span class="Keyword">=</span> render_style
+<span class="line-numbers">   7 </span>       render_options <span class="Keyword">=</span> YAML.<span class="FunctionName">load</span>( <span class="Support">File</span>.<span class="FunctionName">open</span>(  renderer ) )
+<span class="line-numbers">   8 </span>       <span class="Keyword">if</span> output <span class="Keyword">==</span> <span class="String"><span class="String">&quot;</span>xhtml<span class="String">&quot;</span></span>
+<span class="line-numbers">   9 </span>          render_processor <span class="Keyword">=</span> <span class="Support">HtmlProcessor</span>.<span class="FunctionName">new</span>( render_options, line_numbers )
+<span class="line-numbers">  10 </span>          @syntaxes[syntax_name].<span class="FunctionName">parse</span>( text,  render_processor )
+<span class="line-numbers">  11 </span>          <span class="String"><span class="String">&quot;</span>&lt;pre class =<span class="Constant">\&quot;</span><span class="String"><span class="String">#{</span>css_class<span class="String">}</span></span><span class="Constant">\&quot;</span>&gt;<span class="String"><span class="String">#{</span>render_processor<span class="String"><span class="String">.</span><span class="FunctionName">string</span></span><span class="String">}</span></span>&lt;/pre&gt;<span class="String">&quot;</span></span>
+<span class="line-numbers">  12 </span>       <span class="Keyword">else</span>
+<span class="line-numbers">  13 </span>          <span class="Keyword">raise</span>( ArgumentError, <span class="String"><span class="String">&quot;</span>Output for <span class="String"><span class="String">#{</span>output<span class="String">}</span></span> is not yet implemented<span class="String">&quot;</span></span> )
+<span class="line-numbers">  14 </span>       <span class="Keyword">end</span>
+<span class="line-numbers">  15 </span>    <span class="Keyword">end</span>
+<span class="line-numbers">  16 </span> <span class="Keyword">end</span>
+</pre>
+
+<h2>lazy</h2>
+
+<pre class="lazy"><span class="line-numbers">   1 </span> 
+<span class="line-numbers">   2 </span> <span class="Keyword">module</span> <span class="Entity">Uv</span>
+<span class="line-numbers">   3 </span>    <span class="Keyword">def</span> <span class="Entity">Uv.parse</span> text, output <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>xhtml<span class="String">&quot;</span></span>, syntax_name <span class="Keyword">=</span> <span class="Constant">nil</span>, line_numbers <span class="Keyword">=</span> <span class="Constant">false</span>, render_style <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>classic<span class="String">&quot;</span></span>
+<span class="line-numbers">   4 </span>       init_syntaxes <span class="Keyword">unless</span> <span class="Variable"><span class="Variable">@</span>syntaxes</span>
+<span class="line-numbers">   5 </span>       renderer <span class="Keyword">=</span> <span class="Support">File</span>.<span class="Entity">join</span>( <span class="Support">File</span>.<span class="Entity">dirname</span>(<span class="Variable">__FILE__</span>), <span class="String"><span class="String">'</span>..<span class="String">'</span></span>,<span class="String"><span class="String">&quot;</span>render<span class="String">&quot;</span></span>, output,<span class="String"><span class="String">&quot;</span><span class="String"><span class="String">#{</span>render_style<span class="String">}</span></span>.render<span class="String">&quot;</span></span>)
+<span class="line-numbers">   6 </span>       css_class <span class="Keyword">=</span> render_style
+<span class="line-numbers">   7 </span>       render_options <span class="Keyword">=</span> <span class="Variable">YAML</span>.<span class="Entity">load</span>( <span class="Support">File</span>.<span class="Entity">open</span>(  renderer ) )
+<span class="line-numbers">   8 </span>       <span class="Keyword">if</span> output <span class="Keyword">==</span> <span class="String"><span class="String">&quot;</span>xhtml<span class="String">&quot;</span></span>
+<span class="line-numbers">   9 </span>          render_processor <span class="Keyword">=</span> <span class="Support">HtmlProcessor</span>.<span class="Entity">new</span>( render_options, line_numbers )
+<span class="line-numbers">  10 </span>          <span class="Variable"><span class="Variable">@</span>syntaxes</span>[syntax_name].<span class="Entity">parse</span>( text,  render_processor )
+<span class="line-numbers">  11 </span>          <span class="String"><span class="String">&quot;</span>&lt;pre class =<span class="Constant">\&quot;</span><span class="String"><span class="String">#{</span>css_class<span class="String">}</span></span><span class="Constant">\&quot;</span>&gt;<span class="String"><span class="String">#{</span>render_processor<span class="String"><span class="String">.</span><span class="Entity">string</span></span><span class="String">}</span></span>&lt;/pre&gt;<span class="String">&quot;</span></span>
+<span class="line-numbers">  12 </span>       <span class="Keyword">else</span>
+<span class="line-numbers">  13 </span>          <span class="Keyword">raise</span>( <span class="Variable">ArgumentError</span>, <span class="String"><span class="String">&quot;</span>Output for <span class="String"><span class="String">#{</span>output<span class="String">}</span></span> is not yet implemented<span class="String">&quot;</span></span> )
+<span class="line-numbers">  14 </span>       <span class="Keyword">end</span>
+<span class="line-numbers">  15 </span>    <span class="Keyword">end</span>
+<span class="line-numbers">  16 </span> <span class="Keyword">end</span>
+</pre>
+
+<h2>mac_classic</h2>
+
+<pre class="mac_classic"><span class="line-numbers">   1 </span> 
+<span class="line-numbers">   2 </span> <span class="Keyword">module</span> <span class="TypeName">Uv</span>
+<span class="line-numbers">   3 </span>    <span class="Keyword">def</span> <span class="FunctionName">Uv.parse</span> text, output <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>xhtml<span class="String">&quot;</span></span>, syntax_name <span class="Keyword">=</span> <span class="BuiltInConstant">nil</span>, line_numbers <span class="Keyword">=</span> <span class="BuiltInConstant">false</span>, render_style <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>classic<span class="String">&quot;</span></span>
+<span class="line-numbers">   4 </span>       init_syntaxes <span class="Keyword">unless</span> <span class="Variable"><span class="Variable">@</span>syntaxes</span>
+<span class="line-numbers">   5 </span>       renderer <span class="Keyword">=</span> <span class="LibraryObject">File</span>.<span class="FunctionName">join</span>( <span class="LibraryObject">File</span>.<span class="FunctionName">dirname</span>(<span class="Variable">__FILE__</span>), <span class="String"><span class="String">'</span>..<span class="String">'</span></span>,<span class="String"><span class="String">&quot;</span>render<span class="String">&quot;</span></span>, output,<span class="String"><span class="String">&quot;</span><span class="StringInterpolation"><span class="StringInterpolation">#{</span>render_style<span class="StringInterpolation">}</span></span>.render<span class="String">&quot;</span></span>)
+<span class="line-numbers">   6 </span>       css_class <span class="Keyword">=</span> render_style
+<span class="line-numbers">   7 </span>       render_options <span class="Keyword">=</span> <span class="Variable">YAML</span>.<span class="FunctionName">load</span>( <span class="LibraryObject">File</span>.<span class="FunctionName">open</span>(  renderer ) )
+<span class="line-numbers">   8 </span>       <span class="Keyword">if</span> output <span class="Keyword">==</span> <span class="String"><span class="String">&quot;</span>xhtml<span class="String">&quot;</span></span>
+<span class="line-numbers">   9 </span>          render_processor <span class="Keyword">=</span> <span class="LibraryObject">HtmlProcessor</span>.<span class="FunctionName">new</span>( render_options, line_numbers )
+<span class="line-numbers">  10 </span>          <span class="Variable"><span class="Variable">@</span>syntaxes</span>[syntax_name].<span class="FunctionName">parse</span>( text,  render_processor )
+<span class="line-numbers">  11 </span>          <span class="String"><span class="String">&quot;</span>&lt;pre class =<span class="StringInterpolation">\&quot;</span><span class="StringInterpolation"><span class="StringInterpolation">#{</span>css_class<span class="StringInterpolation">}</span></span><span class="StringInterpolation">\&quot;</span>&gt;<span class="StringInterpolation"><span class="StringInterpolation">#{</span>render_processor<span class="StringInterpolation"><span class="StringInterpolation">.</span><span class="FunctionName">string</span></span><span class="StringInterpolation">}</span></span>&lt;/pre&gt;<span class="String">&quot;</span></span>
+<span class="line-numbers">  12 </span>       <span class="Keyword">else</span>
+<span class="line-numbers">  13 </span>          <span class="Keyword">raise</span>( <span class="Variable">ArgumentError</span>, <span class="String"><span class="String">&quot;</span>Output for <span class="StringInterpolation"><span class="StringInterpolation">#{</span>output<span class="StringInterpolation">}</span></span> is not yet implemented<span class="String">&quot;</span></span> )
+<span class="line-numbers">  14 </span>       <span class="Keyword">end</span>
+<span class="line-numbers">  15 </span>    <span class="Keyword">end</span>
+<span class="line-numbers">  16 </span> <span class="Keyword">end</span>
+</pre>
+
+<h2>magicwb_amiga</h2>
+
+<pre class="magicwb_amiga"><span class="line-numbers">   1 </span> 
+<span class="line-numbers">   2 </span> <span class="Keyword">module</span> <span class="TypeName">Uv</span>
+<span class="line-numbers">   3 </span>    <span class="Keyword">def</span> <span class="FunctionName">Uv.parse</span> text, output <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>xhtml<span class="String">&quot;</span></span>, syntax_name <span class="Keyword">=</span> <span class="ConstantBuiltIn">nil</span>, line_numbers <span class="Keyword">=</span> <span class="ConstantBuiltIn">false</span>, render_style <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>classic<span class="String">&quot;</span></span>
+<span class="line-numbers">   4 </span>       init_syntaxes <span class="Keyword">unless</span> <span class="Variable"><span class="Variable">@</span>syntaxes</span>
+<span class="line-numbers">   5 </span>       renderer <span class="Keyword">=</span> <span class="LibraryClassType">File</span>.<span class="FunctionName">join</span>( <span class="LibraryClassType">File</span>.<span class="FunctionName">dirname</span>(<span class="Variable">__FILE__</span>), <span class="String"><span class="String">'</span>..<span class="String">'</span></span>,<span class="String"><span class="String">&quot;</span>render<span class="String">&quot;</span></span>, output,<span class="String"><span class="String">&quot;</span><span class="String"><span class="String">#{</span>render_style<span class="String">}</span></span>.render<span class="String">&quot;</span></span>)
+<span class="line-numbers">   6 </span>       css_class <span class="Keyword">=</span> render_style
+<span class="line-numbers">   7 </span>       render_options <span class="Keyword">=</span> <span class="Variable">YAML</span>.<span class="FunctionName">load</span>( <span class="LibraryClassType">File</span>.<span class="FunctionName">open</span>(  renderer ) )
+<span class="line-numbers">   8 </span>       <span class="Keyword">if</span> output <span class="Keyword">==</span> <span class="String"><span class="String">&quot;</span>xhtml<span class="String">&quot;</span></span>
+<span class="line-numbers">   9 </span>          render_processor <span class="Keyword">=</span> <span class="LibraryClassType">HtmlProcessor</span>.<span class="FunctionName">new</span>( render_options, line_numbers )
+<span class="line-numbers">  10 </span>          <span class="Variable"><span class="Variable">@</span>syntaxes</span>[syntax_name].<span class="FunctionName">parse</span>( text,  render_processor )
+<span class="line-numbers">  11 </span>          <span class="String"><span class="String">&quot;</span>&lt;pre class =<span class="ConstantUserDefined">\&quot;</span><span class="String"><span class="String">#{</span>css_class<span class="String">}</span></span><span class="ConstantUserDefined">\&quot;</span>&gt;<span class="String"><span class="String">#{</span>render_processor<span class="String"><span class="String">.</span><span class="FunctionName">string</span></span><span class="String">}</span></span>&lt;/pre&gt;<span class="String">&quot;</span></span>
+<span class="line-numbers">  12 </span>       <span class="Keyword">else</span>
+<span class="line-numbers">  13 </span>          <span class="Keyword">raise</span>( <span class="Variable">ArgumentError</span>, <span class="String"><span class="String">&quot;</span>Output for <span class="String"><span class="String">#{</span>output<span class="String">}</span></span> is not yet implemented<span class="String">&quot;</span></span> )
+<span class="line-numbers">  14 </span>       <span class="Keyword">end</span>
+<span class="line-numbers">  15 </span>    <span class="Keyword">end</span>
+<span class="line-numbers">  16 </span> <span class="Keyword">end</span>
+</pre>
+
+<h2>pastels_on_dark</h2>
+
+<pre class="pastels_on_dark"><span class="line-numbers">   1 </span> 
+<span class="line-numbers">   2 </span> <span class="ControlStructures">module</span> Uv
+<span class="line-numbers">   3 </span>    <span class="ControlStructures">def</span> Uv.parse text, output <span class="Operators">=</span> <span class="Strings"><span class="Strings">&quot;</span>xhtml<span class="Strings">&quot;</span></span>, syntax_name <span class="Operators">=</span> <span class="LanguageConstants">nil</span>, line_numbers <span class="Operators">=</span> <span class="LanguageConstants">false</span>, render_style <span class="Operators">=</span> <span class="Strings"><span class="Strings">&quot;</span>classic<span class="Strings">&quot;</span></span>
+<span class="line-numbers">   4 </span>       init_syntaxes <span class="ControlStructures">unless</span> <span class="Variables"><span class="Variables">@</span>syntaxes</span>
+<span class="line-numbers">   5 </span>       renderer <span class="Operators">=</span> File.join( File.dirname(<span class="Variables">__FILE__</span>), <span class="Strings"><span class="Strings">'</span>..<span class="Strings">'</span></span>,<span class="Strings"><span class="Strings">&quot;</span>render<span class="Strings">&quot;</span></span>, output,<span class="Strings"><span class="Strings">&quot;</span><span class="Strings"><span class="Strings">#{</span>render_style<span class="Strings">}</span></span>.render<span class="Strings">&quot;</span></span>)
+<span class="line-numbers">   6 </span>       css_class <span class="Operators">=</span> render_style
+<span class="line-numbers">   7 </span>       render_options <span class="Operators">=</span> <span class="Variables">YAML</span>.load( File.open(  renderer ) )
+<span class="line-numbers">   8 </span>       <span class="ControlStructures">if</span> output <span class="Operators">==</span> <span class="Strings"><span class="Strings">&quot;</span>xhtml<span class="Strings">&quot;</span></span>
+<span class="line-numbers">   9 </span>          render_processor <span class="Operators">=</span> HtmlProcessor.new( render_options, line_numbers )
+<span class="line-numbers">  10 </span>          <span class="Variables"><span class="Variables">@</span>syntaxes</span>[syntax_name].parse( text,  render_processor )
+<span class="line-numbers">  11 </span>          <span class="Strings"><span class="Strings">&quot;</span>&lt;pre class =<span class="CharacterConstants">\&quot;</span><span class="Strings"><span class="Strings">#{</span>css_class<span class="Strings">}</span></span><span class="CharacterConstants">\&quot;</span>&gt;<span class="Strings"><span class="Strings">#{</span>render_processor<span class="Strings"><span class="Strings">.</span><span class="Strings">string</span></span><span class="Strings">}</span></span>&lt;/pre&gt;<span class="Strings">&quot;</span></span>
+<span class="line-numbers">  12 </span>       <span class="ControlStructures">else</span>
+<span class="line-numbers">  13 </span>          <span class="Keywords">raise</span>( <span class="Variables">ArgumentError</span>, <span class="Strings"><span class="Strings">&quot;</span>Output for <span class="Strings"><span class="Strings">#{</span>output<span class="Strings">}</span></span> is not yet implemented<span class="Strings">&quot;</span></span> )
+<span class="line-numbers">  14 </span>       <span class="ControlStructures">end</span>
+<span class="line-numbers">  15 </span>    <span class="ControlStructures">end</span>
+<span class="line-numbers">  16 </span> <span class="ControlStructures">end</span>
+</pre>
+
+<h2>slush_poppies</h2>
+
+<pre class="slush_poppies"><span class="line-numbers">   1 </span> 
+<span class="line-numbers">   2 </span> <span class="Keyword">module</span> Uv
+<span class="line-numbers">   3 </span>    <span class="Keyword">def</span> <span class="FunctionName">Uv.parse</span> text, output <span class="Operators">=</span> <span class="String"><span class="String">&quot;</span>xhtml<span class="String">&quot;</span></span>, syntax_name <span class="Operators">=</span> <span class="BuiltInConstant">nil</span>, line_numbers <span class="Operators">=</span> <span class="BuiltInConstant">false</span>, render_style <span class="Operators">=</span> <span class="String"><span class="String">&quot;</span>classic<span class="String">&quot;</span></span>
+<span class="line-numbers">   4 </span>       init_syntaxes <span class="Keyword">unless</span> <span class="Variable"><span class="Variable">@</span>syntaxes</span>
+<span class="line-numbers">   5 </span>       renderer <span class="Operators">=</span> <span class="LibraryClassType">File</span>.<span class="FunctionName">join</span>( <span class="LibraryClassType">File</span>.<span class="FunctionName">dirname</span>(__FILE__), <span class="String"><span class="String">'</span>..<span class="String">'</span></span>,<span class="String"><span class="String">&quot;</span>render<span class="String">&quot;</span></span>, output,<span class="String"><span class="String">&quot;</span><span class="String"><span class="String">#{</span>render_style<span class="String">}</span></span>.render<span class="String">&quot;</span></span>)
+<span class="line-numbers">   6 </span>       css_class <span class="Operators">=</span> render_style
+<span class="line-numbers">   7 </span>       render_options <span class="Operators">=</span> <span class="Variable">YAML</span>.<span class="FunctionName">load</span>( <span class="LibraryClassType">File</span>.<span class="FunctionName">open</span>(  renderer ) )
+<span class="line-numbers">   8 </span>       <span class="Keyword">if</span> output <span class="Operators">==</span> <span class="String"><span class="String">&quot;</span>xhtml<span class="String">&quot;</span></span>
+<span class="line-numbers">   9 </span>          render_processor <span class="Operators">=</span> <span class="LibraryClassType">HtmlProcessor</span>.<span class="FunctionName">new</span>( render_options, line_numbers )
+<span class="line-numbers">  10 </span>          <span class="Variable"><span class="Variable">@</span>syntaxes</span>[syntax_name].<span class="FunctionName">parse</span>( text,  render_processor )
+<span class="line-numbers">  11 </span>          <span class="String"><span class="String">&quot;</span>&lt;pre class =<span class="CharacterConstants">\&quot;</span><span class="String"><span class="String">#{</span>css_class<span class="String">}</span></span><span class="CharacterConstants">\&quot;</span>&gt;<span class="String"><span class="String">#{</span>render_processor<span class="String"><span class="String">.</span><span class="FunctionName">string</span></span><span class="String">}</span></span>&lt;/pre&gt;<span class="String">&quot;</span></span>
+<span class="line-numbers">  12 </span>       <span class="Keyword">else</span>
+<span class="line-numbers">  13 </span>          <span class="Keyword">raise</span>( <span class="Variable">ArgumentError</span>, <span class="String"><span class="String">&quot;</span>Output for <span class="String"><span class="String">#{</span>output<span class="String">}</span></span> is not yet implemented<span class="String">&quot;</span></span> )
+<span class="line-numbers">  14 </span>       <span class="Keyword">end</span>
+<span class="line-numbers">  15 </span>    <span class="Keyword">end</span>
+<span class="line-numbers">  16 </span> <span class="Keyword">end</span>
+</pre>
+
+<h2>spacecadet</h2>
+
+<pre class="spacecadet"><span class="line-numbers">   1 </span> 
+<span class="line-numbers">   2 </span> <span class="Keyword">module</span> <span class="Entity">Uv</span>
+<span class="line-numbers">   3 </span>    <span class="Keyword">def</span> <span class="Entity">Uv.parse</span> text, output = <span class="String"><span class="String">&quot;</span>xhtml<span class="String">&quot;</span></span>, syntax_name = <span class="Constant">nil</span>, line_numbers = <span class="Constant">false</span>, render_style = <span class="String"><span class="String">&quot;</span>classic<span class="String">&quot;</span></span>
+<span class="line-numbers">   4 </span>       init_syntaxes <span class="Keyword">unless</span> <span class="Variable"><span class="Variable">@</span>syntaxes</span>
+<span class="line-numbers">   5 </span>       renderer = <span class="LibraryClassType">File</span>.<span class="Entity">join</span>( <span class="LibraryClassType">File</span>.<span class="Entity">dirname</span>(__FILE__), <span class="String"><span class="String">'</span>..<span class="String">'</span></span>,<span class="String"><span class="String">&quot;</span>render<span class="String">&quot;</span></span>, output,<span class="String"><span class="String">&quot;</span><span class="String"><span class="String">#{</span>render_style<span class="String">}</span></span>.render<span class="String">&quot;</span></span>)
+<span class="line-numbers">   6 </span>       css_class = render_style
+<span class="line-numbers">   7 </span>       render_options = <span class="Variable">YAML</span>.<span class="Entity">load</span>( <span class="LibraryClassType">File</span>.<span class="Entity">open</span>(  renderer ) )
+<span class="line-numbers">   8 </span>       <span class="Keyword">if</span> output == <span class="String"><span class="String">&quot;</span>xhtml<span class="String">&quot;</span></span>
+<span class="line-numbers">   9 </span>          render_processor = <span class="LibraryClassType">HtmlProcessor</span>.<span class="Entity">new</span>( render_options, line_numbers )
+<span class="line-numbers">  10 </span>          <span class="Variable"><span class="Variable">@</span>syntaxes</span>[syntax_name].<span class="Entity">parse</span>( text,  render_processor )
+<span class="line-numbers">  11 </span>          <span class="String"><span class="String">&quot;</span>&lt;pre class =<span class="Constant">\&quot;</span><span class="String"><span class="String">#{</span>css_class<span class="String">}</span></span><span class="Constant">\&quot;</span>&gt;<span class="String"><span class="String">#{</span>render_processor<span class="String"><span class="String">.</span><span class="Entity">string</span></span><span class="String">}</span></span>&lt;/pre&gt;<span class="String">&quot;</span></span>
+<span class="line-numbers">  12 </span>       <span class="Keyword">else</span>
+<span class="line-numbers">  13 </span>          <span class="Keyword">raise</span>( <span class="Variable">ArgumentError</span>, <span class="String"><span class="String">&quot;</span>Output for <span class="String"><span class="String">#{</span>output<span class="String">}</span></span> is not yet implemented<span class="String">&quot;</span></span> )
+<span class="line-numbers">  14 </span>       <span class="Keyword">end</span>
+<span class="line-numbers">  15 </span>    <span class="Keyword">end</span>
+<span class="line-numbers">  16 </span> <span class="Keyword">end</span>
+</pre>
+
+<h2>sunburst</h2>
+
+<pre class="sunburst"><span class="line-numbers">   1 </span> 
+<span class="line-numbers">   2 </span> <span class="Keyword">module</span> <span class="JEntityNameType">Uv</span>
+<span class="line-numbers">   3 </span>    <span class="Keyword">def</span> <span class="Entity">Uv.parse</span> text, output <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>xhtml<span class="String">&quot;</span></span>, syntax_name <span class="Keyword">=</span> <span class="Constant">nil</span>, line_numbers <span class="Keyword">=</span> <span class="Constant">false</span>, render_style <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>classic<span class="String">&quot;</span></span>
+<span class="line-numbers">   4 </span>       init_syntaxes <span class="Keyword">unless</span> <span class="Variable"><span class="Variable">@</span>syntaxes</span>
+<span class="line-numbers">   5 </span>       renderer <span class="Keyword">=</span> <span class="Support">File</span>.<span class="Entity">join</span>( <span class="Support">File</span>.<span class="Entity">dirname</span>(<span class="Variable">__FILE__</span>), <span class="String"><span class="String">'</span>..<span class="String">'</span></span>,<span class="String"><span class="String">&quot;</span>render<span class="String">&quot;</span></span>, output,<span class="String"><span class="String">&quot;</span><span class="StringEmbeddedSource"><span class="StringEmbeddedSource">#{</span>render_style<span class="StringEmbeddedSource">}</span></span>.render<span class="String">&quot;</span></span>)
+<span class="line-numbers">   6 </span>       css_class <span class="Keyword">=</span> render_style
+<span class="line-numbers">   7 </span>       render_options <span class="Keyword">=</span> <span class="Variable">YAML</span>.<span class="Entity">load</span>( <span class="Support">File</span>.<span class="Entity">open</span>(  renderer ) )
+<span class="line-numbers">   8 </span>       <span class="Keyword">if</span> output <span class="Keyword">==</span> <span class="String"><span class="String">&quot;</span>xhtml<span class="String">&quot;</span></span>
+<span class="line-numbers">   9 </span>          render_processor <span class="Keyword">=</span> <span class="Support">HtmlProcessor</span>.<span class="Entity">new</span>( render_options, line_numbers )
+<span class="line-numbers">  10 </span>          <span class="Variable"><span class="Variable">@</span>syntaxes</span>[syntax_name].<span class="Entity">parse</span>( text,  render_processor )
+<span class="line-numbers">  11 </span>          <span class="String"><span class="String">&quot;</span>&lt;pre class =<span class="StringConstant">\&quot;</span><span class="StringEmbeddedSource"><span class="StringEmbeddedSource">#{</span>css_class<span class="StringEmbeddedSource">}</span></span><span class="StringConstant">\&quot;</span>&gt;<span class="StringEmbeddedSource"><span class="StringEmbeddedSource">#{</span>render_processor<span class="StringEmbeddedSource"><span class="StringEmbeddedSource">.</span><span class="Entity">string</span></span><span class="StringEmbeddedSource">}</span></span>&lt;/pre&gt;<span class="String">&quot;</span></span>
+<span class="line-numbers">  12 </span>       <span class="Keyword">else</span>
+<span class="line-numbers">  13 </span>          <span class="Keyword">raise</span>( <span class="Variable">ArgumentError</span>, <span class="String"><span class="String">&quot;</span>Output for <span class="StringEmbeddedSource"><span class="StringEmbeddedSource">#{</span>output<span class="StringEmbeddedSource">}</span></span> is not yet implemented<span class="String">&quot;</span></span> )
+<span class="line-numbers">  14 </span>       <span class="Keyword">end</span>
+<span class="line-numbers">  15 </span>    <span class="Keyword">end</span>
+<span class="line-numbers">  16 </span> <span class="Keyword">end</span>
+</pre>
+
+<h2>twilight</h2>
+
+<pre class="twilight"><span class="line-numbers">   1 </span> 
+<span class="line-numbers">   2 </span> <span class="Keyword">module</span> <span class="Entity">Uv</span>
+<span class="line-numbers">   3 </span>    <span class="Keyword">def</span> <span class="Entity">Uv.parse</span> text, output <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>xhtml<span class="String">&quot;</span></span>, syntax_name <span class="Keyword">=</span> <span class="Constant">nil</span>, line_numbers <span class="Keyword">=</span> <span class="Constant">false</span>, render_style <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>classic<span class="String">&quot;</span></span>
+<span class="line-numbers">   4 </span>       init_syntaxes <span class="Keyword">unless</span> <span class="Variable"><span class="Variable">@</span>syntaxes</span>
+<span class="line-numbers">   5 </span>       renderer <span class="Keyword">=</span> <span class="Support">File</span>.<span class="Entity">join</span>( <span class="Support">File</span>.<span class="Entity">dirname</span>(<span class="Variable">__FILE__</span>), <span class="String"><span class="String">'</span>..<span class="String">'</span></span>,<span class="String"><span class="String">&quot;</span>render<span class="String">&quot;</span></span>, output,<span class="String"><span class="String">&quot;</span><span class="StringEmbeddedSource"><span class="StringEmbeddedSource">#{</span>render_style<span class="StringEmbeddedSource">}</span></span>.render<span class="String">&quot;</span></span>)
+<span class="line-numbers">   6 </span>       css_class <span class="Keyword">=</span> render_style
+<span class="line-numbers">   7 </span>       render_options <span class="Keyword">=</span> <span class="Variable">YAML</span>.<span class="Entity">load</span>( <span class="Support">File</span>.<span class="Entity">open</span>(  renderer ) )
+<span class="line-numbers">   8 </span>       <span class="Keyword">if</span> output <span class="Keyword">==</span> <span class="String"><span class="String">&quot;</span>xhtml<span class="String">&quot;</span></span>
+<span class="line-numbers">   9 </span>          render_processor <span class="Keyword">=</span> <span class="Support">HtmlProcessor</span>.<span class="Entity">new</span>( render_options, line_numbers )
+<span class="line-numbers">  10 </span>          <span class="Variable"><span class="Variable">@</span>syntaxes</span>[syntax_name].<span class="Entity">parse</span>( text,  render_processor )
+<span class="line-numbers">  11 </span>          <span class="String"><span class="String">&quot;</span>&lt;pre class =<span class="StringConstant">\&quot;</span><span class="StringEmbeddedSource"><span class="StringEmbeddedSource">#{</span>css_class<span class="StringEmbeddedSource">}</span></span><span class="StringConstant">\&quot;</span>&gt;<span class="StringEmbeddedSource"><span class="StringEmbeddedSource">#{</span>render_processor<span class="StringEmbeddedSource"><span class="StringEmbeddedSource">.</span><span class="Entity">string</span></span><span class="StringEmbeddedSource">}</span></span>&lt;/pre&gt;<span class="String">&quot;</span></span>
+<span class="line-numbers">  12 </span>       <span class="Keyword">else</span>
+<span class="line-numbers">  13 </span>          <span class="Keyword">raise</span>( <span class="Variable">ArgumentError</span>, <span class="String"><span class="String">&quot;</span>Output for <span class="StringEmbeddedSource"><span class="StringEmbeddedSource">#{</span>output<span class="StringEmbeddedSource">}</span></span> is not yet implemented<span class="String">&quot;</span></span> )
+<span class="line-numbers">  14 </span>       <span class="Keyword">end</span>
+<span class="line-numbers">  15 </span>    <span class="Keyword">end</span>
+<span class="line-numbers">  16 </span> <span class="Keyword">end</span>
+</pre>
+
+<h2>zenburnesque</h2>
+
+<pre class="zenburnesque"><span class="line-numbers">   1 </span> 
+<span class="line-numbers">   2 </span> <span class="LanguageKeyword">module</span> <span class="TypeName">Uv</span>
+<span class="line-numbers">   3 </span>    <span class="LanguageKeyword">def</span> <span class="FunctionName">Uv.parse</span> text, output <span class="Operators">=</span> <span class="String"><span class="String">&quot;</span>xhtml<span class="String">&quot;</span></span>, syntax_name <span class="Operators">=</span> <span class="BuiltInConstant">nil</span>, line_numbers <span class="Operators">=</span> <span class="BuiltInConstant">false</span>, render_style <span class="Operators">=</span> <span class="String"><span class="String">&quot;</span>classic<span class="String">&quot;</span></span>
+<span class="line-numbers">   4 </span>       init_syntaxes <span class="LanguageKeyword">unless</span> <span class="Variable"><span class="Variable">@</span>syntaxes</span>
+<span class="line-numbers">   5 </span>       renderer <span class="Operators">=</span> <span class="LibraryClassType">File</span>.<span class="FunctionName">join</span>( <span class="LibraryClassType">File</span>.<span class="FunctionName">dirname</span>(__FILE__), <span class="String"><span class="String">'</span>..<span class="String">'</span></span>,<span class="String"><span class="String">&quot;</span>render<span class="String">&quot;</span></span>, output,<span class="String"><span class="String">&quot;</span><span class="String"><span class="String">#{</span>render_style<span class="String">}</span></span>.render<span class="String">&quot;</span></span>)
+<span class="line-numbers">   6 </span>       css_class <span class="Operators">=</span> render_style
+<span class="line-numbers">   7 </span>       render_options <span class="Operators">=</span> <span class="Variable">YAML</span>.<span class="FunctionName">load</span>( <span class="LibraryClassType">File</span>.<span class="FunctionName">open</span>(  renderer ) )
+<span class="line-numbers">   8 </span>       <span class="LanguageKeyword">if</span> output <span class="Operators">==</span> <span class="String"><span class="String">&quot;</span>xhtml<span class="String">&quot;</span></span>
+<span class="line-numbers">   9 </span>          render_processor <span class="Operators">=</span> <span class="LibraryClassType">HtmlProcessor</span>.<span class="FunctionName">new</span>( render_options, line_numbers )
+<span class="line-numbers">  10 </span>          <span class="Variable"><span class="Variable">@</span>syntaxes</span>[syntax_name].<span class="FunctionName">parse</span>( text,  render_processor )
+<span class="line-numbers">  11 </span>          <span class="String"><span class="String">&quot;</span>&lt;pre class =<span class="Characters">\&quot;</span><span class="String"><span class="String">#{</span>css_class<span class="String">}</span></span><span class="Characters">\&quot;</span>&gt;<span class="String"><span class="String">#{</span>render_processor<span class="String"><span class="String">.</span><span class="FunctionName">string</span></span><span class="String">}</span></span>&lt;/pre&gt;<span class="String">&quot;</span></span>
+<span class="line-numbers">  12 </span>       <span class="LanguageKeyword">else</span>
+<span class="line-numbers">  13 </span>          <span class="LanguageKeyword">raise</span>( <span class="Variable">ArgumentError</span>, <span class="String"><span class="String">&quot;</span>Output for <span class="String"><span class="String">#{</span>output<span class="String">}</span></span> is not yet implemented<span class="String">&quot;</span></span> )
+<span class="line-numbers">  14 </span>       <span class="LanguageKeyword">end</span>
+<span class="line-numbers">  15 </span>    <span class="LanguageKeyword">end</span>
+<span class="line-numbers">  16 </span> <span class="LanguageKeyword">end</span>
+</pre>
